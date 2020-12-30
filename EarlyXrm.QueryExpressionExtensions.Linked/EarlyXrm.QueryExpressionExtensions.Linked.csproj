@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <Version>0.0.1</Version>
+    <Authors>a berman</Authors>
+	<PackageTags>crm dynamics c#</PackageTags>
+	<Authors>a berman</Authors>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<Description>
+		A linked version of the 'EarlyXrm.QueryExpressionExtensions' library.
+	</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\EarlyXrm.QueryExpressionExtensions\ColumnSet.cs" Link="Source\ColumnSet.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\EarlyXrm.QueryExpressionExtensions\ConditionExpression.cs" Link="Source\ConditionExpression.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\EarlyXrm.QueryExpressionExtensions\EntityCollection.cs" Link="Source\EntityCollection.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\EarlyXrm.QueryExpressionExtensions\FilterExpression.cs" Link="Source\FilterExpression.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\EarlyXrm.QueryExpressionExtensions\ILinkEntity.cs" Link="Source\ILinkEntity.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\EarlyXrm.QueryExpressionExtensions\LinkEntity.cs" Link="Source\LinkEntity.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\EarlyXrm.QueryExpressionExtensions\OrderExpression.cs" Link="Source\OrderExpression.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\EarlyXrm.QueryExpressionExtensions\QueryExpression.cs" Link="Source\QueryExpression.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\EarlyXrm.QueryExpressionExtensions\QueryExpressionExtensions.cs" Link="Source\QueryExpressionExtensions.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <!--<None Include="QueryExpressionExtensions.cs" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Source\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.29" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Compile Remove="QueryExpressionExtensions.cs" />
+    <Content Include="QueryExpressionExtensions.cs">
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+		<CopyToOutputDirectory>Never</CopyToOutputDirectory>   
+      <PackagePath>contentFiles\any\any\;content</PackagePath>
+      <BuildAction>Compile</BuildAction>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Combine.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+	
+	
+	<!-- BEGIN disable default compile and copy binary behaviour --><!--
+	<Target Name="CoreCompile" />
+	<PropertyGroup>
+		<SkipCopyBuildProduct>true</SkipCopyBuildProduct>
+	</PropertyGroup>
+	--><!-- END disable default compile and copy binary behaviour -->
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="&quot;powershell.exe&quot; -ExecutionPolicy Bypass -File $(OutDir)Combine.ps1" />
+  </Target>
+
+</Project>

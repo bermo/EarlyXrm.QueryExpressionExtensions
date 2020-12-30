@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <Version>0.0.1</Version>
+	<PackageTags>crm dynamics c#</PackageTags>
+	<Authors>a berman</Authors>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<Description>
+		A Dynamics library that provides a generic implementation of the QueryExpression class (and similar associated classes) for use with early-bound entities.
+		The library also provides extension some methods that automatically re-hydrates a returned datamodel up to 10 levels deep.
+	</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.29" />
+  </ItemGroup>
+
+</Project>
