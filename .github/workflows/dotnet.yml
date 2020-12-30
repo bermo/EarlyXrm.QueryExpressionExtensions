@@ -26,4 +26,4 @@ jobs:
       run: nuget restore EarlyXrm.QueryExpressionExtensions.sln
 
     - name: Build
-      run: msbuid EarlyXrm.QueryExpressionExtensions.sln
+      run: msbuild EarlyXrm.QueryExpressionExtensions.sln
