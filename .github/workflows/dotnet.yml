@@ -34,9 +34,10 @@ jobs:
     - name: Pack QueryExpressionExtensions.Linked
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions.Linked\EarlyXrm.QueryExpressionExtensions.Linked.csproj /p:Configuration=Release
       
+    - name: Add GPR Source
+      run: nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -Username ${{ github.repository_owner }} -Password ${{ secrets.GITHUB_TOKEN }}  
+      
     - name: Push to github
-      run: nuget push **/*.nupkg -SkipDuplicate
-      env:
-        NUGET_AUTH_TOKEN: ${{ github.token }}
+      run: nuget push **/*.nupkg -Source "GPR" -SkipDuplicate
       #-ApiKey ${{ github.token }} -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -SkipDuplicate
       
