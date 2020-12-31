@@ -26,4 +26,7 @@ jobs:
       run: nuget restore EarlyXrm.QueryExpressionExtensions.sln
 
     - name: Build
-      run: msbuild EarlyXrm.QueryExpressionExtensions.sln
+      run: msbuild EarlyXrm.QueryExpressionExtensions.sln /p:Configuration=Release
+      
+    - name: Pack
+      run: nuget pack EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.csproj Configuration=Release 
