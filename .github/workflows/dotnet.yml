@@ -28,5 +28,9 @@ jobs:
     - name: Build
       run: msbuild EarlyXrm.QueryExpressionExtensions.sln /p:Configuration=Release
       
-    - name: Pack
-      run: nuget pack EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.csproj -build -properties Configuration=Release 
+    - name: Pack QueryExpressionExtensions
+      run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.csproj /p:Configuration=Release
+      
+    - name: Pack QueryExpressionExtensions.Linked
+      run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions.Linked\EarlyXrm.QueryExpressionExtensions.Linked.csproj /p:Configuration=Release
+      
