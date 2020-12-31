@@ -38,6 +38,6 @@ jobs:
       run: nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -Username ${{ github.repository_owner }} -Password ${{ secrets.GITHUB_TOKEN }}  
       
     - name: Push to github
-      run: nuget push **/*.nupkg -Source "GPR" -SkipDuplicate
+      run: nuget push **/*.nupkg -ApiKey ${{ secrets.GITHUB_TOKEN }} -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -SkipDuplicate
       #-ApiKey ${{ github.token }} -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -SkipDuplicate
       
