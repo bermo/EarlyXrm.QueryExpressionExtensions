@@ -35,7 +35,5 @@ jobs:
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions.Linked\EarlyXrm.QueryExpressionExtensions.Linked.csproj /p:Configuration=Release
       
     - name: Push to github
-      run: nuget push **/*.nupkg -Source https://nuget.pkg.github.com/bermo/index.json -SkipDuplicate
-      env:
-        NUGET_AUTH_TOKEN: ${{ github.token }}
+      run: nuget push **/*.nupkg -ApiKey ${{ github.token }} -Source https://nuget.pkg.github.com/bermo/index.json -SkipDuplicate
       
