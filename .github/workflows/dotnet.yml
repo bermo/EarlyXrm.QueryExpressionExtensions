@@ -34,3 +34,6 @@ jobs:
     - name: Pack QueryExpressionExtensions.Linked
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions.Linked\EarlyXrm.QueryExpressionExtensions.Linked.csproj /p:Configuration=Release
       
+    - name: Push to github
+      run: nuget push *.*.nupkg -source https://nuget.pkg.github.com/bermo/index.json
+      
