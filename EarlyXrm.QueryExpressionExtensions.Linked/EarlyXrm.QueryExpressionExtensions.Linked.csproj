@@ -10,6 +10,7 @@
 	<Description>
 		A linked version of the 'EarlyXrm.QueryExpressionExtensions' library.
 	</Description>
+	<RepositoryUrl>https://github.com/bermo/EarlyXrm.QueryExpressionExtensions</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

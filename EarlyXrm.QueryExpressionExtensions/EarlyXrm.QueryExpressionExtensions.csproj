@@ -10,6 +10,7 @@
 		A Dynamics library that provides a generic implementation of the QueryExpression class (and similar associated classes) for use with early-bound entities.
 		The library also provides extension some methods that automatically re-hydrates a returned datamodel up to 10 levels deep.
 	</Description>
+	<RepositoryUrl>https://github.com/bermo/EarlyXrm.QueryExpressionExtensions</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
