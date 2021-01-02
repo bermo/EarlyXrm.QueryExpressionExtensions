@@ -7,8 +7,8 @@
 	<Authors>a berman</Authors>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Description>
-		A Dynamics library that provides a generic implementation of the QueryExpression class (and similar associated classes) for use with early-bound entities.
-		The library also provides extension some methods that automatically re-hydrates a returned datamodel up to 10 levels deep.
+		A Dynamics library that provides generic implementations of many `QueryExpression` related classes for use with early-bound entities.
+		The library also provides extension methods that re-hydrates an aliased flattened entity model.
 	</Description>
 	<RepositoryUrl>https://github.com/bermo/EarlyXrm.QueryExpressionExtensions</RepositoryUrl>
   </PropertyGroup>
