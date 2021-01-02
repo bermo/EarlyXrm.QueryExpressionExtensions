@@ -33,13 +33,16 @@ jobs:
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.csproj /p:Configuration=Release;
       
     - name: Pack QueryExpressionExtensions.Linked
-      run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions.Linked\EarlyXrm.QueryExpressionExtensions.Linked.csproj /p:Configuration=Release;
+      run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions.Linked\EarlyXrm.QueryExpressionExtensions.Linked.csproj /p:Configuration=Release;OutputPath=$GITHUB_WORKSPACE/staging
       
     - name: Publish build artifacts
       uses: actions/upload-artifact@master
       with:
         name: packages
-        path: ./
+        path: staging
+
+    - name: Add Github Source
+      run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -Username ${{ github.repository_owner }} -Password ${{ secrets.GITHUB_TOKEN }}
 
     - name: Push to github
       run: nuget push **/*.nupkg -ApiKey ${{ secrets.GITHUB_TOKEN }} -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
