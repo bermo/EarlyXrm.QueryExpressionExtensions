@@ -39,6 +39,7 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: packages
+        path: ./
 
     - name: Push to github
       run: nuget push **/*.nupkg -ApiKey ${{ secrets.GITHUB_TOKEN }} -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
