@@ -53,5 +53,37 @@ namespace EarlyXrm.QueryExpressionExtensions.UnitTests
             Assert.Equal(ConditionOperator.In, last.Operator);
             Assert.Equal(new object[] { "test1", "test2" }, last.Values);
         }
+
+        [Fact]
+        public void Filters_SetupAsExpected()
+        {
+            var fe = new FilterExpression<Test>
+            {
+                Filters =
+                {
+                    new FilterExpression<Test>(LogicalOperator.Or)
+                    {
+                        Conditions =
+                        {
+                            new ConditionExpression<Test>(x => x.Name, "test1"),
+                            new ConditionExpression<Test>(x => x.Name, "test2")
+                        }
+                    }
+                }
+            };
+
+            var result = (FilterExpression)fe;
+
+            var filter = result.Filters.First();
+            Assert.Equal(LogicalOperator.Or, filter.FilterOperator);
+            var first = filter.Conditions.First();
+            Assert.Equal("ee_name", first.AttributeName);
+            Assert.Equal(ConditionOperator.Equal, first.Operator);
+            Assert.Equal("test1", first.Values.First());
+            var last = filter.Conditions.Last();
+            Assert.Equal("ee_name", last.AttributeName);
+            Assert.Equal(ConditionOperator.Equal, last.Operator);
+            Assert.Equal("test2", last.Values.First());
+        }
     }
 }
