@@ -2,9 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches:
+     - '**'
+    tags:
+     - 'v*.*.*'
   pull_request:
-    branches: [ master ]
+    branches:
+     - '**'
 
 jobs:
   build:
@@ -20,6 +24,8 @@ jobs:
       uses: gittools/actions/gitversion/setup@v0.9.7
       with:
           versionSpec: '5.x'
+          useConfigFile: true
+          configFilePath: ./GitVersion.yml
 
     - name: Use GitVersion
       id: gitversion # step id used as reference for output values
