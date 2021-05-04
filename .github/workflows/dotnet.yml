@@ -63,4 +63,6 @@ jobs:
 
     - name: Push to github
       run: nuget push **/*.nupkg -ApiKey ${{ secrets.GITHUB_TOKEN }} -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -SkipDuplicate
-      
+
+    - name: Push to nuget.org
+      run: nuget push **/*.nupkg -ApiKey ${{ secrets.NUGET_APIKEY }} -source https://api.nuget.org/v3/index.json

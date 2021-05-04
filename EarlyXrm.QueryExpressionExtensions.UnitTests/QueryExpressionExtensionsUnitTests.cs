@@ -154,6 +154,37 @@ namespace EarlyXrm.QueryExpressionExtensions.UnitTests
         }
 
         [Fact]
+        public void RetrieveMultiple_HydratesWithLinkEntityAsExpected()
+        {
+            var qe = new QueryExpression<Test>
+            {
+                LinkEntities = {
+                    new LinkEntity<Test>(x => x.TestManys)
+                }
+            };
+            Guid testId = Guid.NewGuid(), testManyId = Guid.NewGuid();
+            var entityCollection = new EntityCollection(new List<Entity>{
+                new Test {
+                    Id = testId, Name = "Test1", DayOfWeek = DayOfWeek.Monday,
+                    Attributes =
+                    {
+                        { "A.ee_testmanyid", new AliasedValue("ee_testmany", "ee_testmanyid", testManyId) }
+                    }
+                }
+            });
+            service.RetrieveMultiple(Arg.Any<QueryBase>()).Returns(entityCollection);
+
+            var result = qe.RetrieveMultiple(service);
+
+            var actual = result.Entities.First();
+            Assert.Equal(testId, actual.Id);
+            Assert.Equal("Test1", actual.Name);
+            Assert.Equal(DayOfWeek.Monday, actual.DayOfWeek);
+            var subActual = Assert.Single(actual.TestManys);
+            Assert.Equal(testManyId, subActual.Id);
+        }
+
+        [Fact]
         public void Retrieve_HydratesSubLinkEntitiesAsExpected()
         {
             var qe = new QueryExpression<Test>
@@ -244,5 +275,7 @@ namespace EarlyXrm.QueryExpressionExtensions.UnitTests
             Assert.Equal(DayOfWeek.Monday, result.DayOfWeek);
             Assert.Equal(2, result.TestChilds.Count());
         }
+
+
     }
 }
