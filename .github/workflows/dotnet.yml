@@ -45,6 +45,12 @@ jobs:
 
     - name: Test
       run: dotnet test -c Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+
+    - run: Install-Module -Force -Name Xrm.Framework.CI.PowerShell.Cmdlets
+      shell: powershell
+      
+    - run: Select-WhoAmI -ConnectionString:"${{secrets.CrmConnectionString}}"
+      shell: powershell
       
     - name: Pack QueryExpressionExtensions
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.csproj /p:Configuration=Release /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}
