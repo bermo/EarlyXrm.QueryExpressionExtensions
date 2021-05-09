@@ -40,6 +40,12 @@ jobs:
     - name: Restore Nuget
       run: nuget restore EarlyXrm.QueryExpressionExtensions.sln
 
+    - uses: microsoft/variable-substitution@v1 
+      with:
+        files: EarlyXrm.QueryExpressionExtensions.IntegrationTests\appsettings.json
+      env:
+        ConnectionStrings.Crm: ${{secrets.CrmConnectionString}}
+
     - name: Build
       run: msbuild EarlyXrm.QueryExpressionExtensions.sln /p:Configuration=Release
 
@@ -52,13 +58,7 @@ jobs:
     - run: Select-WhoAmI -ConnectionString:"${{secrets.CrmConnectionString}}"
       shell: powershell
 
-    - uses: microsoft/variable-substitution@v1 
-      with:
-        files: EarlyXrm.QueryExpressionExtensions.IntegrationTests\appsettings.json
-      env:
-        ConnectionStrings.Crm: ${{secrets.CrmConnectionString}}
-
-    - run: Get-Content EarlyXrm.QueryExpressionExtensions.IntegrationTests\appsettings.json
+    - run: Get-Content EarlyXrm.QueryExpressionExtensions.IntegrationTests\bin\Release\net462\appsettings.json
       shell: powershell
 
     - name: Integration Tests
