@@ -1,0 +1,31 @@
+{
+  "Out": "EarlyXrm\\EarlyBoundTypes.cs", // the path off the project root where to generate the c# file to
+  "Namespace": "EarlyBoundTypes", // the namespace for the generated code
+  "UseDisplayNames": true, // whether to use Dynamics friendly nameas or not
+  "DebugMode": true,
+  "Instrument": false,
+  "AddSetters": true, // globally add setters to readonly properties (note, this will cause exceptions in some cases)
+  "NestNonGlobalEnums": true, // this nests entity specific enums inside the entity class.  Only works if UseDisplayNames = true
+  "GenerateConstants": true, // generates a list of nested constants containing logical name and relationships
+
+  "Include": {
+    "report": [],
+    "reportcategory": [],
+    "reportentity": [],
+    "reportlink": [],
+    "reportvisibility": []
+  },
+
+  "Exclude": {
+    "*": [ // global exclude filter for logicalname attributes on any entity
+      "importsequencenumber",
+      "createdbyexternalparty",
+      "createdonbehalfby",
+      "modifiedonbehalfby"
+    ]
+  },
+
+  "Solutions": [],
+
+  "ConnectionString": null
+}

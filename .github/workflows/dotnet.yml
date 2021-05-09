@@ -43,14 +43,26 @@ jobs:
     - name: Build
       run: msbuild EarlyXrm.QueryExpressionExtensions.sln /p:Configuration=Release
 
-    - name: Test
-      run: dotnet test -c Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+    - name: Unit Tests
+      run: dotnet test -c Release --no-build --filter FullyQualifiedName\!~IntegrationTests /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
 
     - run: Install-Module -Force -Name Xrm.Framework.CI.PowerShell.Cmdlets
       shell: powershell
       
     - run: Select-WhoAmI -ConnectionString:"${{secrets.CrmConnectionString}}"
       shell: powershell
+
+    - uses: microsoft/variable-substitution@v1 
+      with:
+        files: EarlyXrm.QueryExpressionExtensions.IntegrationTests\appsettings.json
+      env:
+        ConnectionStrings.Crm: ${{secrets.CrmConnectionString}}
+
+    - run: Get-Content EarlyXrm.QueryExpressionExtensions.IntegrationTests\appsettings.json
+      shell: powershell
+
+    - name: Integration Tests
+      run: dotnet test -c Release --no-build --filter FullyQualifiedName\!~UnitTests
       
     - name: Pack QueryExpressionExtensions
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.csproj /p:Configuration=Release /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}
