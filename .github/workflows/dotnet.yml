@@ -44,7 +44,7 @@ jobs:
       run: msbuild EarlyXrm.QueryExpressionExtensions.sln /p:Configuration=Release
 
     - name: Unit Tests
-      run: dotnet test -c Release --no-build --filter FullyQualifiedName\!~IntegrationTests /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+      run: dotnet test -c Release --no-build --filter FullyQualifiedName~UnitTests /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
 
     - run: Install-Module -Force -Name Xrm.Framework.CI.PowerShell.Cmdlets
       shell: powershell
@@ -62,7 +62,7 @@ jobs:
       shell: powershell
 
     - name: Integration Tests
-      run: dotnet test -c Release --no-build --filter FullyQualifiedName\!~UnitTests
+      run: dotnet test -c Release --no-build --filter FullyQualifiedName~IntegrationTests
       
     - name: Pack QueryExpressionExtensions
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.csproj /p:Configuration=Release /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}
