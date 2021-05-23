@@ -4,6 +4,7 @@ using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -129,9 +130,18 @@ namespace EarlyXrm.QueryExpressionExtensions
                     linkEntity.LinkFromEntityName = parentLogical;
                     linkEntity.LinkFromAttributeName = primaryKey;
 
+                    var attributeProvider = pi.GetCustomAttribute<AttributeProviderAttribute>();
+                    if (attributeProvider != null)
+                    {
+                        var type = Type.GetType(attributeProvider.TypeName);
+                        linkschemaName = type.GetCustomAttribute<EntityLogicalNameAttribute>().LogicalName;
+                    }
+                    else if (linkschemaName.EndsWith("_association")) // Alot of built-in many-to-many junction entities have an "_association" suffix ...
+                    {
+                        linkschemaName = linkschemaName.Substring(0, linkschemaName.Length - "_association".Length);
+                    }
+
                     linkEntity.LinkToEntityName = linkschemaName.ToLower(); // use RelationshipSchema by convention for custom entities ...
-                    if (linkEntity.LinkToEntityName.EndsWith("_association")) // I think all built-in many-to-many junction entities have an "_association" suffix ...
-                        linkschemaName = linkEntity.LinkToEntityName.Substring(0, linkEntity.LinkToEntityName.Length - "_association".Length);
 
                     linkEntity.LinkToAttributeName = primaryKey;
 

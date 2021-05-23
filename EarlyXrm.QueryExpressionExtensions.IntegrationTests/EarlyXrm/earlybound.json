@@ -1,31 +1,49 @@
 {
+  // interactive login by default.
+  "ConnectionString": null, //This can be populated this for convenience and/or to enable filtering via solution/s. 
+
   "Out": "EarlyXrm\\EarlyBoundTypes.cs", // the path off the project root where to generate the c# file to
   "Namespace": "EarlyBoundTypes", // the namespace for the generated code
-  "UseDisplayNames": true, // whether to use Dynamics friendly nameas or not
-  "DebugMode": true,
-  "Instrument": false,
-  "AddSetters": true, // globally add setters to readonly properties (note, this will cause exceptions in some cases)
+  "UseDisplayNames": true, // whether to use Dynamics friendly names or not
+  "AddSetters": false, // globally add setters to readonly properties (note, this will cause exceptions in some cases)
   "NestNonGlobalEnums": true, // this nests entity specific enums inside the entity class.  Only works if UseDisplayNames = true
   "GenerateConstants": true, // generates a list of nested constants containing logical name and relationships
 
+  "Solutions": [ // if one or more solution (unique) names are included, those entities and attributes will be automatically included
+    //"default"   // eg. including this will generate all entities, attributes, and relationships in the organisation!
+  ], // note, if any "Solutions" are included, the "ConnectionString" setting needs to be populated
+
   "Include": {
+
     "report": [],
     "reportcategory": [],
     "reportentity": [],
     "reportlink": [],
-    "reportvisibility": []
+    "reportvisibility": [],
+
+    "role": [],
+    "privilege": [],
+    "roleprivileges": [],
+
+    "knowledgearticle": [],
+    "category": [],
+    "knowledgearticlescategories": [],
+    "languagelocale": [],
   },
 
-  "Exclude": {
-    "*": [ // global exclude filter for logicalname attributes on any entity
+  "Exclude": { 
+    "*": [
       "importsequencenumber",
-      "createdbyexternalparty",
       "createdonbehalfby",
-      "modifiedonbehalfby"
+      "createdbyexternalparty",
+      "modifiedonbehalfby",
+      "modifiedbyexternalparty",
+      "versionnumber",
+      "transactioncurrencyid",
+      "overriddencreatedon",
+      "timezoneruleversionnumber",
+      "utcconversiontimezonecode",
+      "overwritetime"
     ]
-  },
-
-  "Solutions": [],
-
-  "ConnectionString": null
+  }
 }

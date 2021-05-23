@@ -23,6 +23,275 @@ namespace EarlyBoundTypes
 	
 	
 	[DataContract()]
+	[EntityLogicalNameAttribute("category")]
+	[ExcludeFromCodeCoverage()]
+	public partial class Category : EarlyEntity
+	{
+		
+		public Category() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		[AttributeLogicalNameAttribute("categorynumber")]
+		public string CategoryNumber
+		{
+			get
+			{
+				return GetAttributeValue<string>("categorynumber");
+			}
+			set
+			{
+				SetAttributeValue("categorynumber", nameof(CategoryNumber), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("createdby")]
+		public EntityReference CreatedBy
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("createdby");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("description")]
+		public string Description
+		{
+			get
+			{
+				return GetAttributeValue<string>("description");
+			}
+			set
+			{
+				SetAttributeValue("description", nameof(Description), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("sequencenumber")]
+		public int? DisplayOrder
+		{
+			get
+			{
+				return GetAttributeValue<int?>("sequencenumber");
+			}
+			set
+			{
+				SetAttributeValue("sequencenumber", nameof(DisplayOrder), value);
+			}
+		}
+		
+		public const string EntityLogicalCollectionName = "categories ";
+		
+		public const string EntityLogicalName = "category";
+		
+		public const string EntitySetName = "categories";
+		
+		[AttributeLogicalNameAttribute("exchangerate")]
+		public decimal? ExchangeRate
+		{
+			get
+			{
+				return GetAttributeValue<decimal?>("exchangerate");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("categoryid")]
+		public new virtual Guid Id
+		{
+			get
+			{
+				return base.Id != default ? base.Id : GetAttributeValue<Guid>("categoryid");
+			}
+			set
+			{
+				SetAttributeValue("categoryid", nameof(Id), value);
+				base.Id = value;
+			}
+		}
+		
+		[AttributeProvider(typeof(KnowledgeArticleCategory))]
+		[RelationshipSchemaNameAttribute("knowledgearticle_category")]
+		public IEnumerable<KnowledgeArticle> KnowledgeArticles
+		{
+			get
+			{
+				return GetRelatedEntities<KnowledgeArticle>("knowledgearticle_category");
+			}
+			set
+			{
+				SetRelatedEntities<KnowledgeArticle>("knowledgearticle_category", nameof(KnowledgeArticles), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("modifiedby")]
+		public EntityReference ModifiedBy
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("modifiedby");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("modifiedon")]
+		public DateTime? ModifiedOn
+		{
+			get
+			{
+				return GetAttributeValue<DateTime?>("modifiedon");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("ownerid")]
+		public EntityReference Owner
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("ownerid");
+			}
+			set
+			{
+				SetAttributeValue("ownerid", nameof(Owner), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("owningbusinessunit")]
+		public EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("owningbusinessunit");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("owningteam")]
+		public EntityReference OwningTeam
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("owningteam");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("owninguser")]
+		public EntityReference OwningUser
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("owninguser");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("parentcategoryid")]
+		public EntityReference ParentCategory
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("parentcategoryid");
+			}
+			set
+			{
+				SetAttributeValue("parentcategoryid", nameof(ParentCategory), value);
+			}
+		}
+		
+		[RelationshipSchemaNameAttribute("category_parent_category", EntityRole.Referenced)]
+		public IEnumerable<Category> ParentCategory_Categories
+		{
+			get
+			{
+				return GetRelatedEntities<Category>("category_parent_category", EntityRole.Referenced);
+			}
+			set
+			{
+				SetRelatedEntities<Category>("category_parent_category", nameof(ParentCategory_Categories), value, EntityRole.Referenced);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("parentcategoryid")]
+		[RelationshipSchemaNameAttribute("category_parent_category", EntityRole.Referencing)]
+		public Category ParentCategory_Category
+		{
+			get
+			{
+				return GetRelatedEntity<Category>("category_parent_category", EntityRole.Referencing);
+			}
+			set
+			{
+				SetRelatedEntity<Category>("category_parent_category", nameof(ParentCategory_Category), value, EntityRole.Referencing);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("createdon")]
+		public DateTime? RecordCreatedOn
+		{
+			get
+			{
+				return GetAttributeValue<DateTime?>("createdon");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("title")]
+		public string Title
+		{
+			get
+			{
+				return GetAttributeValue<string>("title");
+			}
+			set
+			{
+				SetAttributeValue("title", nameof(Title), value);
+			}
+		}
+		
+		[DataContract()]
+		public struct LogicalNames
+		{
+			
+			public const string CategoryNumber = "categorynumber";
+			
+			public const string CreatedBy = "createdby";
+			
+			public const string Description = "description";
+			
+			public const string DisplayOrder = "sequencenumber";
+			
+			public const string ExchangeRate = "exchangerate";
+			
+			public const string Id = "categoryid";
+			
+			public const string ModifiedBy = "modifiedby";
+			
+			public const string ModifiedOn = "modifiedon";
+			
+			public const string Owner = "ownerid";
+			
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			
+			public const string OwningTeam = "owningteam";
+			
+			public const string OwningUser = "owninguser";
+			
+			public const string ParentCategory = "parentcategoryid";
+			
+			public const string RecordCreatedOn = "createdon";
+			
+			public const string Title = "title";
+		}
+		
+		[DataContract()]
+		public struct Relationships
+		{
+			
+			public const string KnowledgeArticles = "knowledgearticle_category";
+			
+			public const string ParentCategory_Categories = "category_parent_category";
+			
+			public const string ParentCategory_Category = "category_parent_category";
+		}
+	}
+	
+	[DataContract()]
 	public enum ComponentState
 	{
 		
@@ -41,6 +310,1559 @@ namespace EarlyBoundTypes
 		[Description("Unpublished")]
 		[EnumMember()]
 		Unpublished = 1,
+	}
+	
+	[DataContract()]
+	public enum IsInherited
+	{
+		
+		[Description("Direct User (Basic) access level and Team privileges")]
+		[EnumMember()]
+		DirectUserBasicAccessLevelAndTeamPrivileges = 1,
+		
+		[Description("Team privileges only")]
+		[EnumMember()]
+		TeamPrivilegesOnly = 0,
+	}
+	
+	[DataContract()]
+	[EntityLogicalNameAttribute("knowledgearticle")]
+	[ExcludeFromCodeCoverage()]
+	public partial class KnowledgeArticle : EarlyEntity
+	{
+		
+		public KnowledgeArticle() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		[AttributeLogicalNameAttribute("articlepublicnumber")]
+		public string ArticlePublicNumber
+		{
+			get
+			{
+				return GetAttributeValue<string>("articlepublicnumber");
+			}
+			set
+			{
+				SetAttributeValue("articlepublicnumber", nameof(ArticlePublicNumber), value);
+			}
+		}
+		
+		[AttributeProvider(typeof(KnowledgeArticleCategory))]
+		[RelationshipSchemaNameAttribute("knowledgearticle_category")]
+		public IEnumerable<Category> Categories
+		{
+			get
+			{
+				return GetRelatedEntities<Category>("knowledgearticle_category");
+			}
+			set
+			{
+				SetRelatedEntities<Category>("knowledgearticle_category", nameof(Categories), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("content")]
+		public string Content
+		{
+			get
+			{
+				return GetAttributeValue<string>("content");
+			}
+			set
+			{
+				SetAttributeValue("content", nameof(Content), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("createdby")]
+		public EntityReference CreatedBy
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("createdby");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("createdon")]
+		public DateTime? CreatedOn
+		{
+			get
+			{
+				return GetAttributeValue<DateTime?>("createdon");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("traversedpath")]
+		public string DeprecatedTraversedPath
+		{
+			get
+			{
+				return GetAttributeValue<string>("traversedpath");
+			}
+			set
+			{
+				SetAttributeValue("traversedpath", nameof(DeprecatedTraversedPath), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("description")]
+		public string Description
+		{
+			get
+			{
+				return GetAttributeValue<string>("description");
+			}
+			set
+			{
+				SetAttributeValue("description", nameof(Description), value);
+			}
+		}
+		
+		public const string EntityLogicalCollectionName = "knowledgearticles";
+		
+		public const string EntityLogicalName = "knowledgearticle";
+		
+		public const string EntitySetName = "knowledgearticles";
+		
+		[AttributeLogicalNameAttribute("exchangerate")]
+		public decimal? ExchangeRate
+		{
+			get
+			{
+				return GetAttributeValue<decimal?>("exchangerate");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("expirationdate")]
+		public DateTime? ExpirationDate
+		{
+			get
+			{
+				return GetAttributeValue<DateTime?>("expirationdate");
+			}
+			set
+			{
+				SetAttributeValue("expirationdate", nameof(ExpirationDate), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("expirationstateid")]
+		public int? ExpirationStateId
+		{
+			get
+			{
+				return GetAttributeValue<int?>("expirationstateid");
+			}
+			set
+			{
+				SetAttributeValue("expirationstateid", nameof(ExpirationStateId), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("expiredreviewoptions")]
+		public Enums.ExpiredReviewOptions? ExpiredReviewOptions
+		{
+			get
+			{
+				return (Enums.ExpiredReviewOptions?)GetAttributeValue<OptionSetValue>("expiredreviewoptions")?.Value;
+			}
+			set
+			{
+				SetAttributeValue("expiredreviewoptions", nameof(ExpiredReviewOptions), value.HasValue ? new OptionSetValue((int)value.Value) : null);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("expirationstatusid")]
+		public int? ExpiredStatus
+		{
+			get
+			{
+				return GetAttributeValue<int?>("expirationstatusid");
+			}
+			set
+			{
+				SetAttributeValue("expirationstatusid", nameof(ExpiredStatus), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("knowledgearticleid")]
+		public new virtual Guid Id
+		{
+			get
+			{
+				return base.Id != default ? base.Id : GetAttributeValue<Guid>("knowledgearticleid");
+			}
+			set
+			{
+				SetAttributeValue("knowledgearticleid", nameof(Id), value);
+				base.Id = value;
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("msdyn_ingestedarticleurl")]
+		public string IngestedArticleURL
+		{
+			get
+			{
+				return GetAttributeValue<string>("msdyn_ingestedarticleurl");
+			}
+			set
+			{
+				SetAttributeValue("msdyn_ingestedarticleurl", nameof(IngestedArticleURL), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("isinternal")]
+		public bool? Internal
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("isinternal");
+			}
+			set
+			{
+				SetAttributeValue("isinternal", nameof(Internal), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("msdyn_isingestedarticle")]
+		public bool? IsIngestedArticle
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("msdyn_isingestedarticle");
+			}
+			set
+			{
+				SetAttributeValue("msdyn_isingestedarticle", nameof(IsIngestedArticle), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("islatestversion")]
+		public bool? IsLatestVersion
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("islatestversion");
+			}
+			set
+			{
+				SetAttributeValue("islatestversion", nameof(IsLatestVersion), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("keywords")]
+		public string Keywords
+		{
+			get
+			{
+				return GetAttributeValue<string>("keywords");
+			}
+			set
+			{
+				SetAttributeValue("keywords", nameof(Keywords), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("knowledgearticleviews_date")]
+		public DateTime? KnowledgeArticleViewLastUpdatedTime
+		{
+			get
+			{
+				return GetAttributeValue<DateTime?>("knowledgearticleviews_date");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("knowledgearticleviews")]
+		public int? KnowledgeArticleViews
+		{
+			get
+			{
+				return GetAttributeValue<int?>("knowledgearticleviews");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("knowledgearticleviews_state")]
+		public int? KnowledgeArticleViewState
+		{
+			get
+			{
+				return GetAttributeValue<int?>("knowledgearticleviews_state");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("languagelocaleid")]
+		public EntityReference Language
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("languagelocaleid");
+			}
+			set
+			{
+				SetAttributeValue("languagelocaleid", nameof(Language), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("languagelocaleid")]
+		[RelationshipSchemaNameAttribute("knowledgearticle_languagelocaleid")]
+		public Language Language_Language
+		{
+			get
+			{
+				return GetRelatedEntity<Language>("knowledgearticle_languagelocaleid");
+			}
+			set
+			{
+				SetRelatedEntity<Language>("knowledgearticle_languagelocaleid", nameof(Language_Language), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("majorversionnumber")]
+		public int? MajorVersionNumber
+		{
+			get
+			{
+				return GetAttributeValue<int?>("majorversionnumber");
+			}
+			set
+			{
+				SetAttributeValue("majorversionnumber", nameof(MajorVersionNumber), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("minorversionnumber")]
+		public int? MinorVersionNumber
+		{
+			get
+			{
+				return GetAttributeValue<int?>("minorversionnumber");
+			}
+			set
+			{
+				SetAttributeValue("minorversionnumber", nameof(MinorVersionNumber), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("modifiedby")]
+		public EntityReference ModifiedBy
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("modifiedby");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("modifiedon")]
+		public DateTime? ModifiedOn
+		{
+			get
+			{
+				return GetAttributeValue<DateTime?>("modifiedon");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("ownerid")]
+		public EntityReference Owner
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("ownerid");
+			}
+			set
+			{
+				SetAttributeValue("ownerid", nameof(Owner), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("owningbusinessunit")]
+		public EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("owningbusinessunit");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("owningteam")]
+		public EntityReference OwningTeam
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("owningteam");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("owninguser")]
+		public EntityReference OwningUser
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("owninguser");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("parentarticlecontentid")]
+		public EntityReference ParentArticleContentId
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("parentarticlecontentid");
+			}
+			set
+			{
+				SetAttributeValue("parentarticlecontentid", nameof(ParentArticleContentId), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("parentarticlecontentid")]
+		[RelationshipSchemaNameAttribute("knowledgearticle_parentarticle_contentid", EntityRole.Referencing)]
+		public KnowledgeArticle ParentArticleContentId_KnowledgeArticle
+		{
+			get
+			{
+				return GetRelatedEntity<KnowledgeArticle>("knowledgearticle_parentarticle_contentid", EntityRole.Referencing);
+			}
+			set
+			{
+				SetRelatedEntity<KnowledgeArticle>("knowledgearticle_parentarticle_contentid", nameof(ParentArticleContentId_KnowledgeArticle), value, EntityRole.Referencing);
+			}
+		}
+		
+		[RelationshipSchemaNameAttribute("knowledgearticle_parentarticle_contentid", EntityRole.Referenced)]
+		public IEnumerable<KnowledgeArticle> ParentArticleContentId_KnowledgeArticles
+		{
+			get
+			{
+				return GetRelatedEntities<KnowledgeArticle>("knowledgearticle_parentarticle_contentid", EntityRole.Referenced);
+			}
+			set
+			{
+				SetRelatedEntities<KnowledgeArticle>("knowledgearticle_parentarticle_contentid", nameof(ParentArticleContentId_KnowledgeArticles), value, EntityRole.Referenced);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("previousarticlecontentid")]
+		public EntityReference PreviousArticleContentID
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("previousarticlecontentid");
+			}
+			set
+			{
+				SetAttributeValue("previousarticlecontentid", nameof(PreviousArticleContentID), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("previousarticlecontentid")]
+		[RelationshipSchemaNameAttribute("knowledgearticle_previousarticle_contentid", EntityRole.Referencing)]
+		public KnowledgeArticle PreviousArticleContentID_KnowledgeArticle
+		{
+			get
+			{
+				return GetRelatedEntity<KnowledgeArticle>("knowledgearticle_previousarticle_contentid", EntityRole.Referencing);
+			}
+			set
+			{
+				SetRelatedEntity<KnowledgeArticle>("knowledgearticle_previousarticle_contentid", nameof(PreviousArticleContentID_KnowledgeArticle), value, EntityRole.Referencing);
+			}
+		}
+		
+		[RelationshipSchemaNameAttribute("knowledgearticle_previousarticle_contentid", EntityRole.Referenced)]
+		public IEnumerable<KnowledgeArticle> PreviousArticleContentID_KnowledgeArticles
+		{
+			get
+			{
+				return GetRelatedEntities<KnowledgeArticle>("knowledgearticle_previousarticle_contentid", EntityRole.Referenced);
+			}
+			set
+			{
+				SetRelatedEntities<KnowledgeArticle>("knowledgearticle_previousarticle_contentid", nameof(PreviousArticleContentID_KnowledgeArticles), value, EntityRole.Referenced);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("isprimary")]
+		public bool? PrimaryArticle
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("isprimary");
+			}
+			set
+			{
+				SetAttributeValue("isprimary", nameof(PrimaryArticle), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("primaryauthorid")]
+		public EntityReference PrimaryAuthorId
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("primaryauthorid");
+			}
+			set
+			{
+				SetAttributeValue("primaryauthorid", nameof(PrimaryAuthorId), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("processid")]
+		public Guid? ProcessId
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("processid");
+			}
+			set
+			{
+				SetAttributeValue("processid", nameof(ProcessId), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("publishstatusid")]
+		public int? PublishedStatus
+		{
+			get
+			{
+				return GetAttributeValue<int?>("publishstatusid");
+			}
+			set
+			{
+				SetAttributeValue("publishstatusid", nameof(PublishedStatus), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("publishon")]
+		public DateTime? PublishOn
+		{
+			get
+			{
+				return GetAttributeValue<DateTime?>("publishon");
+			}
+			set
+			{
+				SetAttributeValue("publishon", nameof(PublishOn), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("rating")]
+		public decimal? Rating
+		{
+			get
+			{
+				return GetAttributeValue<decimal?>("rating");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("rating_count")]
+		public int? RatingCount
+		{
+			get
+			{
+				return GetAttributeValue<int?>("rating_count");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("rating_date")]
+		public DateTime? RatingLastUpdatedTime
+		{
+			get
+			{
+				return GetAttributeValue<DateTime?>("rating_date");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("rating_state")]
+		public int? RatingState
+		{
+			get
+			{
+				return GetAttributeValue<int?>("rating_state");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("rating_sum")]
+		public decimal? Ratingsum
+		{
+			get
+			{
+				return GetAttributeValue<decimal?>("rating_sum");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("readyforreview")]
+		public bool? ReadyForReview
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("readyforreview");
+			}
+			set
+			{
+				SetAttributeValue("readyforreview", nameof(ReadyForReview), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("review")]
+		public Enums.Review? Review
+		{
+			get
+			{
+				return (Enums.Review?)GetAttributeValue<OptionSetValue>("review")?.Value;
+			}
+			set
+			{
+				SetAttributeValue("review", nameof(Review), value.HasValue ? new OptionSetValue((int)value.Value) : null);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("isrootarticle")]
+		public bool? RootArticle
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("isrootarticle");
+			}
+			set
+			{
+				SetAttributeValue("isrootarticle", nameof(RootArticle), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("rootarticleid")]
+		public EntityReference RootArticleId
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("rootarticleid");
+			}
+			set
+			{
+				SetAttributeValue("rootarticleid", nameof(RootArticleId), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("rootarticleid")]
+		[RelationshipSchemaNameAttribute("knowledgearticle_rootarticle_id", EntityRole.Referencing)]
+		public KnowledgeArticle RootArticleId_KnowledgeArticle
+		{
+			get
+			{
+				return GetRelatedEntity<KnowledgeArticle>("knowledgearticle_rootarticle_id", EntityRole.Referencing);
+			}
+			set
+			{
+				SetRelatedEntity<KnowledgeArticle>("knowledgearticle_rootarticle_id", nameof(RootArticleId_KnowledgeArticle), value, EntityRole.Referencing);
+			}
+		}
+		
+		[RelationshipSchemaNameAttribute("knowledgearticle_rootarticle_id", EntityRole.Referenced)]
+		public IEnumerable<KnowledgeArticle> RootArticleId_KnowledgeArticles
+		{
+			get
+			{
+				return GetRelatedEntities<KnowledgeArticle>("knowledgearticle_rootarticle_id", EntityRole.Referenced);
+			}
+			set
+			{
+				SetRelatedEntities<KnowledgeArticle>("knowledgearticle_rootarticle_id", nameof(RootArticleId_KnowledgeArticles), value, EntityRole.Referenced);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("scheduledstatusid")]
+		public int? ScheduledStatus
+		{
+			get
+			{
+				return GetAttributeValue<int?>("scheduledstatusid");
+			}
+			set
+			{
+				SetAttributeValue("scheduledstatusid", nameof(ScheduledStatus), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("setcategoryassociations")]
+		public bool? SetCategoryAssociations
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("setcategoryassociations");
+			}
+			set
+			{
+				SetAttributeValue("setcategoryassociations", nameof(SetCategoryAssociations), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("stageid")]
+		public Guid? StageId
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("stageid");
+			}
+			set
+			{
+				SetAttributeValue("stageid", nameof(StageId), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("statecode")]
+		public Enums.Status? Status
+		{
+			get
+			{
+				return (Enums.Status?)GetAttributeValue<OptionSetValue>("statecode")?.Value;
+			}
+			set
+			{
+				SetAttributeValue("statecode", nameof(Status), value.HasValue ? new OptionSetValue((int)value.Value) : null);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("statuscode")]
+		public Enums.StatusReason? StatusReason
+		{
+			get
+			{
+				return (Enums.StatusReason?)GetAttributeValue<OptionSetValue>("statuscode")?.Value;
+			}
+			set
+			{
+				SetAttributeValue("statuscode", nameof(StatusReason), value.HasValue ? new OptionSetValue((int)value.Value) : null);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("subjectid")]
+		public EntityReference Subject
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("subjectid");
+			}
+			set
+			{
+				SetAttributeValue("subjectid", nameof(Subject), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("title")]
+		public string Title
+		{
+			get
+			{
+				return GetAttributeValue<string>("title");
+			}
+			set
+			{
+				SetAttributeValue("title", nameof(Title), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("updatecontent")]
+		public bool? UpdateContent
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("updatecontent");
+			}
+			set
+			{
+				SetAttributeValue("updatecontent", nameof(UpdateContent), value);
+			}
+		}
+		
+		[DataContract()]
+		public struct Enums
+		{
+			
+			[DataContract()]
+			public enum StatusReason
+			{
+				
+				[AmbientValue(Status.Approved)]
+				[Description("Approved")]
+				[EnumMember()]
+				Approved = 5,
+				
+				[AmbientValue(Status.Archived)]
+				[Description("Archived")]
+				[EnumMember()]
+				Archived = 12,
+				
+				[AmbientValue(Status.Discarded)]
+				[Description("Discarded")]
+				[EnumMember()]
+				Discarded = 13,
+				
+				[AmbientValue(Status.Draft)]
+				[Description("Draft")]
+				[EnumMember()]
+				Draft = 2,
+				
+				[AmbientValue(Status.Expired)]
+				[Description("Expired")]
+				[EnumMember()]
+				Expired = 10,
+				
+				[AmbientValue(Status.Draft)]
+				[Description("In review")]
+				[EnumMember()]
+				InReview = 4,
+				
+				[AmbientValue(Status.Draft)]
+				[Description("Needs review")]
+				[EnumMember()]
+				NeedsReview = 3,
+				
+				[AmbientValue(Status.Published)]
+				[Description("Needs review")]
+				[EnumMember()]
+				NeedsReview2 = 8,
+				
+				[AmbientValue(Status.Draft)]
+				[Description("Proposed")]
+				[EnumMember()]
+				Proposed = 1,
+				
+				[AmbientValue(Status.Published)]
+				[Description("Published")]
+				[EnumMember()]
+				Published = 7,
+				
+				[AmbientValue(Status.Expired)]
+				[Description("Rejected")]
+				[EnumMember()]
+				Rejected = 11,
+				
+				[AmbientValue(Status.Discarded)]
+				[Description("Rejected")]
+				[EnumMember()]
+				Rejected2 = 14,
+				
+				[AmbientValue(Status.Scheduled)]
+				[Description("Scheduled")]
+				[EnumMember()]
+				Scheduled = 6,
+				
+				[AmbientValue(Status.Published)]
+				[Description("Updating")]
+				[EnumMember()]
+				Updating = 9,
+			}
+			
+			[DataContract()]
+			public enum Status
+			{
+				
+				[Description("Approved")]
+				[EnumMember()]
+				Approved = 1,
+				
+				[Description("Archived")]
+				[EnumMember()]
+				Archived = 5,
+				
+				[Description("Discarded")]
+				[EnumMember()]
+				Discarded = 6,
+				
+				[Description("Draft")]
+				[EnumMember()]
+				Draft = 0,
+				
+				[Description("Expired")]
+				[EnumMember()]
+				Expired = 4,
+				
+				[Description("Published")]
+				[EnumMember()]
+				Published = 3,
+				
+				[Description("Scheduled")]
+				[EnumMember()]
+				Scheduled = 2,
+			}
+			
+			[DataContract()]
+			public enum Review
+			{
+				
+				[Description("Approved")]
+				[EnumMember()]
+				Approved = 0,
+				
+				[Description("Rejected")]
+				[EnumMember()]
+				Rejected = 1,
+			}
+			
+			[DataContract()]
+			public enum ExpiredReviewOptions
+			{
+				
+				[Description("Archive")]
+				[EnumMember()]
+				Archive = 2,
+				
+				[Description("Needs Updating")]
+				[EnumMember()]
+				NeedsUpdating = 0,
+				
+				[Description("Republish")]
+				[EnumMember()]
+				Republish = 1,
+			}
+		}
+		
+		[DataContract()]
+		public struct LogicalNames
+		{
+			
+			public const string ArticlePublicNumber = "articlepublicnumber";
+			
+			public const string Content = "content";
+			
+			public const string CreatedBy = "createdby";
+			
+			public const string CreatedOn = "createdon";
+			
+			public const string DeprecatedTraversedPath = "traversedpath";
+			
+			public const string Description = "description";
+			
+			public const string ExchangeRate = "exchangerate";
+			
+			public const string ExpirationDate = "expirationdate";
+			
+			public const string ExpirationStateId = "expirationstateid";
+			
+			public const string ExpiredReviewOptions = "expiredreviewoptions";
+			
+			public const string ExpiredStatus = "expirationstatusid";
+			
+			public const string Id = "knowledgearticleid";
+			
+			public const string IngestedArticleURL = "msdyn_ingestedarticleurl";
+			
+			public const string Internal = "isinternal";
+			
+			public const string IsIngestedArticle = "msdyn_isingestedarticle";
+			
+			public const string IsLatestVersion = "islatestversion";
+			
+			public const string Keywords = "keywords";
+			
+			public const string KnowledgeArticleViewLastUpdatedTime = "knowledgearticleviews_date";
+			
+			public const string KnowledgeArticleViews = "knowledgearticleviews";
+			
+			public const string KnowledgeArticleViewState = "knowledgearticleviews_state";
+			
+			public const string Language = "languagelocaleid";
+			
+			public const string MajorVersionNumber = "majorversionnumber";
+			
+			public const string MinorVersionNumber = "minorversionnumber";
+			
+			public const string ModifiedBy = "modifiedby";
+			
+			public const string ModifiedOn = "modifiedon";
+			
+			public const string Owner = "ownerid";
+			
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			
+			public const string OwningTeam = "owningteam";
+			
+			public const string OwningUser = "owninguser";
+			
+			public const string ParentArticleContentId = "parentarticlecontentid";
+			
+			public const string PreviousArticleContentID = "previousarticlecontentid";
+			
+			public const string PrimaryArticle = "isprimary";
+			
+			public const string PrimaryAuthorId = "primaryauthorid";
+			
+			public const string ProcessId = "processid";
+			
+			public const string PublishedStatus = "publishstatusid";
+			
+			public const string PublishOn = "publishon";
+			
+			public const string Rating = "rating";
+			
+			public const string RatingCount = "rating_count";
+			
+			public const string RatingLastUpdatedTime = "rating_date";
+			
+			public const string RatingState = "rating_state";
+			
+			public const string Ratingsum = "rating_sum";
+			
+			public const string ReadyForReview = "readyforreview";
+			
+			public const string Review = "review";
+			
+			public const string RootArticle = "isrootarticle";
+			
+			public const string RootArticleId = "rootarticleid";
+			
+			public const string ScheduledStatus = "scheduledstatusid";
+			
+			public const string SetCategoryAssociations = "setcategoryassociations";
+			
+			public const string StageId = "stageid";
+			
+			public const string Status = "statecode";
+			
+			public const string StatusReason = "statuscode";
+			
+			public const string Subject = "subjectid";
+			
+			public const string Title = "title";
+			
+			public const string UpdateContent = "updatecontent";
+		}
+		
+		[DataContract()]
+		public struct Relationships
+		{
+			
+			public const string Categories = "knowledgearticle_category";
+			
+			public const string Language_Language = "knowledgearticle_languagelocaleid";
+			
+			public const string ParentArticleContentId_KnowledgeArticle = "knowledgearticle_parentarticle_contentid";
+			
+			public const string ParentArticleContentId_KnowledgeArticles = "knowledgearticle_parentarticle_contentid";
+			
+			public const string PreviousArticleContentID_KnowledgeArticle = "knowledgearticle_previousarticle_contentid";
+			
+			public const string PreviousArticleContentID_KnowledgeArticles = "knowledgearticle_previousarticle_contentid";
+			
+			public const string RootArticleId_KnowledgeArticle = "knowledgearticle_rootarticle_id";
+			
+			public const string RootArticleId_KnowledgeArticles = "knowledgearticle_rootarticle_id";
+		}
+	}
+	
+	[DataContract()]
+	[EntityLogicalNameAttribute("knowledgearticlescategories")]
+	[ExcludeFromCodeCoverage()]
+	public partial class KnowledgeArticleCategory : EarlyEntity
+	{
+		
+		public KnowledgeArticleCategory() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		[AttributeLogicalNameAttribute("categoryid")]
+		public Guid? CategoryId
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("categoryid");
+			}
+		}
+		
+		public const string EntityLogicalCollectionName = null;
+		
+		public const string EntityLogicalName = "knowledgearticlescategories";
+		
+		public const string EntitySetName = "KnowledgeArticleCategories";
+		
+		[AttributeLogicalNameAttribute("knowledgearticlecategoryid")]
+		public new virtual Guid Id
+		{
+			get
+			{
+				return base.Id != default ? base.Id : GetAttributeValue<Guid>("knowledgearticlecategoryid");
+			}
+			set
+			{
+				SetAttributeValue("knowledgearticlecategoryid", nameof(Id), value);
+				base.Id = value;
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("knowledgearticleid")]
+		public Guid? KnowledgeArticleId
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("knowledgearticleid");
+			}
+		}
+		
+		[DataContract()]
+		public struct LogicalNames
+		{
+			
+			public const string CategoryId = "categoryid";
+			
+			public const string Id = "knowledgearticlecategoryid";
+			
+			public const string KnowledgeArticleId = "knowledgearticleid";
+		}
+		
+		[DataContract()]
+		public struct Relationships
+		{
+		}
+	}
+	
+	[DataContract()]
+	[EntityLogicalNameAttribute("languagelocale")]
+	[ExcludeFromCodeCoverage()]
+	public partial class Language : EarlyEntity
+	{
+		
+		public Language() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		[AttributeLogicalNameAttribute("code")]
+		public string Code
+		{
+			get
+			{
+				return GetAttributeValue<string>("code");
+			}
+		}
+		
+		public const string EntityLogicalCollectionName = "languagelocales";
+		
+		public const string EntityLogicalName = "languagelocale";
+		
+		public const string EntitySetName = "languagelocale";
+		
+		[AttributeLogicalNameAttribute("languagelocaleid")]
+		public new virtual Guid Id
+		{
+			get
+			{
+				return base.Id != default ? base.Id : GetAttributeValue<Guid>("languagelocaleid");
+			}
+			set
+			{
+				SetAttributeValue("languagelocaleid", nameof(Id), value);
+				base.Id = value;
+			}
+		}
+		
+		[RelationshipSchemaNameAttribute("knowledgearticle_languagelocaleid")]
+		public IEnumerable<KnowledgeArticle> Language_KnowledgeArticles
+		{
+			get
+			{
+				return GetRelatedEntities<KnowledgeArticle>("knowledgearticle_languagelocaleid");
+			}
+			set
+			{
+				SetRelatedEntities<KnowledgeArticle>("knowledgearticle_languagelocaleid", nameof(Language_KnowledgeArticles), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("language")]
+		public string Language2
+		{
+			get
+			{
+				return GetAttributeValue<string>("language");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("statuscode")]
+		public Enums.Status2? LanguageStatusCode
+		{
+			get
+			{
+				return (Enums.Status2?)GetAttributeValue<OptionSetValue>("statuscode")?.Value;
+			}
+			set
+			{
+				SetAttributeValue("statuscode", nameof(LanguageStatusCode), value.HasValue ? new OptionSetValue((int)value.Value) : null);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("localeid")]
+		public int? LocaleID
+		{
+			get
+			{
+				return GetAttributeValue<int?>("localeid");
+			}
+			set
+			{
+				SetAttributeValue("localeid", nameof(LocaleID), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("name")]
+		public string Name
+		{
+			get
+			{
+				return GetAttributeValue<string>("name");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("organizationid")]
+		public EntityReference Organization
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("organizationid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("region")]
+		public string Region
+		{
+			get
+			{
+				return GetAttributeValue<string>("region");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("statecode")]
+		public Enums.Status? StateCode
+		{
+			get
+			{
+				return (Enums.Status?)GetAttributeValue<OptionSetValue>("statecode")?.Value;
+			}
+			set
+			{
+				SetAttributeValue("statecode", nameof(StateCode), value.HasValue ? new OptionSetValue((int)value.Value) : null);
+			}
+		}
+		
+		[DataContract()]
+		public struct Enums
+		{
+			
+			[DataContract()]
+			public enum Status2
+			{
+				
+				[AmbientValue(Status.Active)]
+				[Description("Active")]
+				[EnumMember()]
+				Active = 1,
+				
+				[AmbientValue(Status.Inactive)]
+				[Description("Inactive")]
+				[EnumMember()]
+				Inactive = 2,
+			}
+			
+			[DataContract()]
+			public enum Status
+			{
+				
+				[Description("Active")]
+				[EnumMember()]
+				Active = 0,
+				
+				[Description("Inactive")]
+				[EnumMember()]
+				Inactive = 1,
+			}
+		}
+		
+		[DataContract()]
+		public struct LogicalNames
+		{
+			
+			public const string Code = "code";
+			
+			public const string Id = "languagelocaleid";
+			
+			public const string Language2 = "language";
+			
+			public const string LanguageStatusCode = "statuscode";
+			
+			public const string LocaleID = "localeid";
+			
+			public const string Name = "name";
+			
+			public const string Organization = "organizationid";
+			
+			public const string Region = "region";
+			
+			public const string StateCode = "statecode";
+		}
+		
+		[DataContract()]
+		public struct Relationships
+		{
+			
+			public const string Language_KnowledgeArticles = "knowledgearticle_languagelocaleid";
+		}
+	}
+	
+	[DataContract()]
+	[EntityLogicalNameAttribute("privilege")]
+	[ExcludeFromCodeCoverage()]
+	public partial class Privilege : EarlyEntity
+	{
+		
+		public Privilege() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		[AttributeLogicalNameAttribute("accessright")]
+		public int? AccessRight
+		{
+			get
+			{
+				return GetAttributeValue<int?>("accessright");
+			}
+			set
+			{
+				SetAttributeValue("accessright", nameof(AccessRight), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("privilegerowid")]
+		public Guid? AppModuleUniqueId
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("privilegerowid");
+			}
+			set
+			{
+				SetAttributeValue("privilegerowid", nameof(AppModuleUniqueId), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("canbebasic")]
+		public bool? CanBeBasic
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("canbebasic");
+			}
+			set
+			{
+				SetAttributeValue("canbebasic", nameof(CanBeBasic), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("canbedeep")]
+		public bool? CanBeDeep
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("canbedeep");
+			}
+			set
+			{
+				SetAttributeValue("canbedeep", nameof(CanBeDeep), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("canbeentityreference")]
+		public bool? CanBeEntityReference
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("canbeentityreference");
+			}
+			set
+			{
+				SetAttributeValue("canbeentityreference", nameof(CanBeEntityReference), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("canbeglobal")]
+		public bool? CanBeGlobal
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("canbeglobal");
+			}
+			set
+			{
+				SetAttributeValue("canbeglobal", nameof(CanBeGlobal), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("canbelocal")]
+		public bool? CanBeLocal
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("canbelocal");
+			}
+			set
+			{
+				SetAttributeValue("canbelocal", nameof(CanBeLocal), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("canbeparententityreference")]
+		public bool? CanBeParentEntityReference
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("canbeparententityreference");
+			}
+			set
+			{
+				SetAttributeValue("canbeparententityreference", nameof(CanBeParentEntityReference), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("componentstate")]
+		public ComponentState? ComponentState
+		{
+			get
+			{
+				return (ComponentState?)GetAttributeValue<OptionSetValue>("componentstate")?.Value;
+			}
+		}
+		
+		public const string EntityLogicalCollectionName = "privileges";
+		
+		public const string EntityLogicalName = "privilege";
+		
+		public const string EntitySetName = "privileges";
+		
+		[AttributeLogicalNameAttribute("privilegeid")]
+		public new virtual Guid Id
+		{
+			get
+			{
+				return base.Id != default ? base.Id : GetAttributeValue<Guid>("privilegeid");
+			}
+			set
+			{
+				SetAttributeValue("privilegeid", nameof(Id), value);
+				base.Id = value;
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("introducedversion")]
+		public string IntroducedVersion
+		{
+			get
+			{
+				return GetAttributeValue<string>("introducedversion");
+			}
+			set
+			{
+				SetAttributeValue("introducedversion", nameof(IntroducedVersion), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("name")]
+		public string Name
+		{
+			get
+			{
+				return GetAttributeValue<string>("name");
+			}
+			set
+			{
+				SetAttributeValue("name", nameof(Name), value);
+			}
+		}
+		
+		[AttributeProvider(typeof(RolePrivileges))]
+		[RelationshipSchemaNameAttribute("roleprivileges_association")]
+		public IEnumerable<SecurityRole> SecurityRoles
+		{
+			get
+			{
+				return GetRelatedEntities<SecurityRole>("roleprivileges_association");
+			}
+			set
+			{
+				SetRelatedEntities<SecurityRole>("roleprivileges_association", nameof(SecurityRoles), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("solutionid")]
+		public Guid? Solution
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("solutionid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("supportingsolutionid")]
+		public Guid? Solution2
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("supportingsolutionid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("ismanaged")]
+		public bool? State
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("ismanaged");
+			}
+		}
+		
+		[DataContract()]
+		public struct LogicalNames
+		{
+			
+			public const string AccessRight = "accessright";
+			
+			public const string AppModuleUniqueId = "privilegerowid";
+			
+			public const string CanBeBasic = "canbebasic";
+			
+			public const string CanBeDeep = "canbedeep";
+			
+			public const string CanBeEntityReference = "canbeentityreference";
+			
+			public const string CanBeGlobal = "canbeglobal";
+			
+			public const string CanBeLocal = "canbelocal";
+			
+			public const string CanBeParentEntityReference = "canbeparententityreference";
+			
+			public const string ComponentState = "componentstate";
+			
+			public const string Id = "privilegeid";
+			
+			public const string IntroducedVersion = "introducedversion";
+			
+			public const string Name = "name";
+			
+			public const string Solution = "solutionid";
+			
+			public const string Solution2 = "supportingsolutionid";
+			
+			public const string State = "ismanaged";
+		}
+		
+		[DataContract()]
+		public struct Relationships
+		{
+			
+			public const string SecurityRoles = "roleprivileges_association";
+		}
 	}
 	
 	[DataContract()]
@@ -87,10 +1909,6 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<string>("originalbodytext");
 			}
-			set
-			{
-				SetAttributeValue("originalbodytext", nameof(BodyText2), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("rdlhash")]
@@ -99,10 +1917,6 @@ namespace EarlyBoundTypes
 			get
 			{
 				return GetAttributeValue<int?>("rdlhash");
-			}
-			set
-			{
-				SetAttributeValue("rdlhash", nameof(BodyTextHash), value);
 			}
 		}
 		
@@ -113,22 +1927,14 @@ namespace EarlyBoundTypes
 			{
 				return (ComponentState?)GetAttributeValue<OptionSetValue>("componentstate")?.Value;
 			}
-			set
-			{
-				SetAttributeValue("componentstate", nameof(ComponentState), value.HasValue ? new OptionSetValue((int)value.Value) : null);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("createdby")]
-		public EntityReference CreatedByRef
+		public EntityReference CreatedBy
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("createdby");
-			}
-			set
-			{
-				SetAttributeValue("createdby", nameof(CreatedByRef), value);
 			}
 		}
 		
@@ -138,10 +1944,6 @@ namespace EarlyBoundTypes
 			get
 			{
 				return GetAttributeValue<DateTime?>("createdon");
-			}
-			set
-			{
-				SetAttributeValue("createdon", nameof(CreatedOn), value);
 			}
 		}
 		
@@ -177,10 +1979,6 @@ namespace EarlyBoundTypes
 			get
 			{
 				return GetAttributeValue<string>("customreportxml");
-			}
-			set
-			{
-				SetAttributeValue("customreportxml", nameof(CustomReportXML), value);
 			}
 		}
 		
@@ -236,10 +2034,6 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<int?>("filesize");
 			}
-			set
-			{
-				SetAttributeValue("filesize", nameof(FileSizeBytes), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("reportid")]
@@ -276,10 +2070,6 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<bool?>("iscustomreport");
 			}
-			set
-			{
-				SetAttributeValue("iscustomreport", nameof(IsCustomReport), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("ismanaged")]
@@ -289,10 +2079,6 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<bool?>("ismanaged");
 			}
-			set
-			{
-				SetAttributeValue("ismanaged", nameof(IsManaged), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("isscheduledreport")]
@@ -301,10 +2087,6 @@ namespace EarlyBoundTypes
 			get
 			{
 				return GetAttributeValue<bool?>("isscheduledreport");
-			}
-			set
-			{
-				SetAttributeValue("isscheduledreport", nameof(IsScheduledReport), value);
 			}
 		}
 		
@@ -322,7 +2104,7 @@ namespace EarlyBoundTypes
 		}
 		
 		[RelationshipSchemaNameAttribute("report_reportlink_sub")]
-		public IEnumerable<ReportLink> LinkedReportReportLinks2
+		public IEnumerable<ReportLink> LinkedReport_ReportLinks
 		{
 			get
 			{
@@ -330,7 +2112,7 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetRelatedEntities<ReportLink>("report_reportlink_sub", nameof(LinkedReportReportLinks2), value);
+				SetRelatedEntities<ReportLink>("report_reportlink_sub", nameof(LinkedReport_ReportLinks), value);
 			}
 		}
 		
@@ -348,7 +2130,7 @@ namespace EarlyBoundTypes
 		}
 		
 		[RelationshipSchemaNameAttribute("report_reportlink")]
-		public IEnumerable<ReportLink> MainReportReportLinks
+		public IEnumerable<ReportLink> MainReport_ReportLinks
 		{
 			get
 			{
@@ -356,7 +2138,7 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetRelatedEntities<ReportLink>("report_reportlink", nameof(MainReportReportLinks), value);
+				SetRelatedEntities<ReportLink>("report_reportlink", nameof(MainReport_ReportLinks), value);
 			}
 		}
 		
@@ -374,15 +2156,11 @@ namespace EarlyBoundTypes
 		}
 		
 		[AttributeLogicalNameAttribute("modifiedby")]
-		public EntityReference ModifiedByRef
+		public EntityReference ModifiedBy
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("modifiedby");
-			}
-			set
-			{
-				SetAttributeValue("modifiedby", nameof(ModifiedByRef), value);
 			}
 		}
 		
@@ -392,10 +2170,6 @@ namespace EarlyBoundTypes
 			get
 			{
 				return GetAttributeValue<DateTime?>("modifiedon");
-			}
-			set
-			{
-				SetAttributeValue("modifiedon", nameof(ModifiedOn), value);
 			}
 		}
 		
@@ -419,14 +2193,10 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<string>("reportnameonsrs");
 			}
-			set
-			{
-				SetAttributeValue("reportnameonsrs", nameof(NameOnSRS), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("ownerid")]
-		public EntityReference OwnerRef
+		public EntityReference Owner
 		{
 			get
 			{
@@ -434,65 +2204,39 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetAttributeValue("ownerid", nameof(OwnerRef), value);
+				SetAttributeValue("ownerid", nameof(Owner), value);
 			}
 		}
 		
 		[AttributeLogicalNameAttribute("owningbusinessunit")]
-		public EntityReference OwningBusinessUnitRef
+		public EntityReference OwningBusinessUnit
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("owningbusinessunit");
 			}
-			set
-			{
-				SetAttributeValue("owningbusinessunit", nameof(OwningBusinessUnitRef), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("owningteam")]
-		public EntityReference OwningTeamRef
+		public EntityReference OwningTeam
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("owningteam");
 			}
-			set
-			{
-				SetAttributeValue("owningteam", nameof(OwningTeamRef), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("owninguser")]
-		public EntityReference OwningUserRef
+		public EntityReference OwningUser
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("owninguser");
 			}
-			set
-			{
-				SetAttributeValue("owninguser", nameof(OwningUserRef), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("parentreportid")]
-		[RelationshipSchemaNameAttribute("report_parent_report", EntityRole.Referencing)]
-		public Report ParentReport
-		{
-			get
-			{
-				return GetRelatedEntity<Report>("report_parent_report", EntityRole.Referencing);
-			}
-			set
-			{
-				SetRelatedEntity<Report>("report_parent_report", nameof(ParentReport), value, EntityRole.Referencing);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("parentreportid")]
-		public EntityReference ParentReportRef
+		public EntityReference ParentReport
 		{
 			get
 			{
@@ -500,12 +2244,26 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetAttributeValue("parentreportid", nameof(ParentReportRef), value);
+				SetAttributeValue("parentreportid", nameof(ParentReport), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("parentreportid")]
+		[RelationshipSchemaNameAttribute("report_parent_report", EntityRole.Referencing)]
+		public Report ParentReport_Report
+		{
+			get
+			{
+				return GetRelatedEntity<Report>("report_parent_report", EntityRole.Referencing);
+			}
+			set
+			{
+				SetRelatedEntity<Report>("report_parent_report", nameof(ParentReport_Report), value, EntityRole.Referencing);
 			}
 		}
 		
 		[RelationshipSchemaNameAttribute("report_parent_report", EntityRole.Referenced)]
-		public IEnumerable<Report> ParentReportReports
+		public IEnumerable<Report> ParentReport_Reports
 		{
 			get
 			{
@@ -513,7 +2271,7 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetRelatedEntities<Report>("report_parent_report", nameof(ParentReportReports), value, EntityRole.Referenced);
+				SetRelatedEntities<Report>("report_parent_report", nameof(ParentReport_Reports), value, EntityRole.Referenced);
 			}
 		}
 		
@@ -524,40 +2282,10 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<string>("queryinfo");
 			}
-			set
-			{
-				SetAttributeValue("queryinfo", nameof(QueryInfoStructure), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("overwritetime")]
-		public DateTime? RecordOverwriteTime
-		{
-			get
-			{
-				return GetAttributeValue<DateTime?>("overwritetime");
-			}
-			set
-			{
-				SetAttributeValue("overwritetime", nameof(RecordOverwriteTime), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("reportidunique")]
-		public Guid? ReportIdUnique
-		{
-			get
-			{
-				return GetAttributeValue<Guid?>("reportidunique");
-			}
-			set
-			{
-				SetAttributeValue("reportidunique", nameof(ReportIdUnique), value);
-			}
 		}
 		
 		[RelationshipSchemaNameAttribute("report_reportcategories")]
-		public IEnumerable<ReportRelatedCategory> ReportRelatedCategories
+		public IEnumerable<ReportRelatedCategory> Report_ReportRelatedCategories
 		{
 			get
 			{
@@ -565,12 +2293,12 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetRelatedEntities<ReportRelatedCategory>("report_reportcategories", nameof(ReportRelatedCategories), value);
+				SetRelatedEntities<ReportRelatedCategory>("report_reportcategories", nameof(Report_ReportRelatedCategories), value);
 			}
 		}
 		
 		[RelationshipSchemaNameAttribute("report_reportentities")]
-		public IEnumerable<ReportRelatedEntity> ReportRelatedEntities
+		public IEnumerable<ReportRelatedEntity> Report_ReportRelatedEntities
 		{
 			get
 			{
@@ -578,7 +2306,29 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetRelatedEntities<ReportRelatedEntity>("report_reportentities", nameof(ReportRelatedEntities), value);
+				SetRelatedEntities<ReportRelatedEntity>("report_reportentities", nameof(Report_ReportRelatedEntities), value);
+			}
+		}
+		
+		[RelationshipSchemaNameAttribute("report_reportvisibility")]
+		public IEnumerable<ReportVisibility> Report_ReportVisibilities
+		{
+			get
+			{
+				return GetRelatedEntities<ReportVisibility>("report_reportvisibility");
+			}
+			set
+			{
+				SetRelatedEntities<ReportVisibility>("report_reportvisibility", nameof(Report_ReportVisibilities), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("reportidunique")]
+		public Guid? Report3
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("reportidunique");
 			}
 		}
 		
@@ -634,19 +2384,6 @@ namespace EarlyBoundTypes
 			}
 		}
 		
-		[RelationshipSchemaNameAttribute("report_reportvisibility")]
-		public IEnumerable<ReportVisibility> ReportVisibilities
-		{
-			get
-			{
-				return GetRelatedEntities<ReportVisibility>("report_reportvisibility");
-			}
-			set
-			{
-				SetRelatedEntities<ReportVisibility>("report_reportvisibility", nameof(ReportVisibilities), value);
-			}
-		}
-		
 		[AttributeLogicalNameAttribute("schedulexml")]
 		public string ScheduleDefinitionXML
 		{
@@ -654,14 +2391,10 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<string>("schedulexml");
 			}
-			set
-			{
-				SetAttributeValue("schedulexml", nameof(ScheduleDefinitionXML), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("signatureid")]
-		public Guid? SignatureId
+		public Guid? Signature
 		{
 			get
 			{
@@ -669,7 +2402,7 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetAttributeValue("signatureid", nameof(SignatureId), value);
+				SetAttributeValue("signatureid", nameof(Signature), value);
 			}
 		}
 		
@@ -687,67 +2420,20 @@ namespace EarlyBoundTypes
 		}
 		
 		[AttributeLogicalNameAttribute("solutionid")]
-		public Guid? SolutionId
+		public Guid? Solution
 		{
 			get
 			{
 				return GetAttributeValue<Guid?>("solutionid");
 			}
-			set
-			{
-				SetAttributeValue("solutionid", nameof(SolutionId), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("supportingsolutionid")]
-		public Guid? SupportingSolutionId
+		public Guid? Solution2
 		{
 			get
 			{
 				return GetAttributeValue<Guid?>("supportingsolutionid");
-			}
-			set
-			{
-				SetAttributeValue("supportingsolutionid", nameof(SupportingSolutionId), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("timezoneruleversionnumber")]
-		public int? TimeZoneRuleVersionNumber
-		{
-			get
-			{
-				return GetAttributeValue<int?>("timezoneruleversionnumber");
-			}
-			set
-			{
-				SetAttributeValue("timezoneruleversionnumber", nameof(TimeZoneRuleVersionNumber), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("utcconversiontimezonecode")]
-		public int? UTCConversionTimeZoneCode
-		{
-			get
-			{
-				return GetAttributeValue<int?>("utcconversiontimezonecode");
-			}
-			set
-			{
-				SetAttributeValue("utcconversiontimezonecode", nameof(UTCConversionTimeZoneCode), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("versionnumber")]
-		public long? VersionNumber
-		{
-			get
-			{
-				return GetAttributeValue<long?>("versionnumber");
-			}
-			set
-			{
-				SetAttributeValue("versionnumber", nameof(VersionNumber), value);
 			}
 		}
 		
@@ -800,7 +2486,7 @@ namespace EarlyBoundTypes
 			
 			public const string ComponentState = "componentstate";
 			
-			public const string CreatedByRef = "createdby";
+			public const string CreatedBy = "createdby";
 			
 			public const string CreatedOn = "createdon";
 			
@@ -834,7 +2520,7 @@ namespace EarlyBoundTypes
 			
 			public const string MimeType = "mimetype";
 			
-			public const string ModifiedByRef = "modifiedby";
+			public const string ModifiedBy = "modifiedby";
 			
 			public const string ModifiedOn = "modifiedon";
 			
@@ -842,21 +2528,19 @@ namespace EarlyBoundTypes
 			
 			public const string NameOnSRS = "reportnameonsrs";
 			
-			public const string OwnerRef = "ownerid";
+			public const string Owner = "ownerid";
 			
-			public const string OwningBusinessUnitRef = "owningbusinessunit";
+			public const string OwningBusinessUnit = "owningbusinessunit";
 			
-			public const string OwningTeamRef = "owningteam";
+			public const string OwningTeam = "owningteam";
 			
-			public const string OwningUserRef = "owninguser";
+			public const string OwningUser = "owninguser";
 			
-			public const string ParentReportRef = "parentreportid";
+			public const string ParentReport = "parentreportid";
 			
 			public const string QueryInfoStructure = "queryinfo";
 			
-			public const string RecordOverwriteTime = "overwritetime";
-			
-			public const string ReportIdUnique = "reportidunique";
+			public const string Report3 = "reportidunique";
 			
 			public const string ReportSignatureDate = "signaturedate";
 			
@@ -868,19 +2552,13 @@ namespace EarlyBoundTypes
 			
 			public const string ScheduleDefinitionXML = "schedulexml";
 			
-			public const string SignatureId = "signatureid";
+			public const string Signature = "signatureid";
 			
 			public const string SignatureLanguageCode = "signaturelcid";
 			
-			public const string SolutionId = "solutionid";
+			public const string Solution = "solutionid";
 			
-			public const string SupportingSolutionId = "supportingsolutionid";
-			
-			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
-			
-			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
-			
-			public const string VersionNumber = "versionnumber";
+			public const string Solution2 = "supportingsolutionid";
 			
 			public const string ViewableBy = "ispersonal";
 		}
@@ -889,19 +2567,19 @@ namespace EarlyBoundTypes
 		public struct Relationships
 		{
 			
-			public const string LinkedReportReportLinks2 = "report_reportlink_sub";
+			public const string LinkedReport_ReportLinks = "report_reportlink_sub";
 			
-			public const string MainReportReportLinks = "report_reportlink";
+			public const string MainReport_ReportLinks = "report_reportlink";
 			
-			public const string ParentReport = "report_parent_report";
+			public const string ParentReport_Report = "report_parent_report";
 			
-			public const string ParentReportReports = "report_parent_report";
+			public const string ParentReport_Reports = "report_parent_report";
 			
-			public const string ReportRelatedCategories = "report_reportcategories";
+			public const string Report_ReportRelatedCategories = "report_reportcategories";
 			
-			public const string ReportRelatedEntities = "report_reportentities";
+			public const string Report_ReportRelatedEntities = "report_reportentities";
 			
-			public const string ReportVisibilities = "report_reportvisibility";
+			public const string Report_ReportVisibilities = "report_reportvisibility";
 		}
 	}
 	
@@ -917,15 +2595,11 @@ namespace EarlyBoundTypes
 		}
 		
 		[AttributeLogicalNameAttribute("createdby")]
-		public EntityReference CreatedByRef
+		public EntityReference CreatedBy
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("createdby");
-			}
-			set
-			{
-				SetAttributeValue("createdby", nameof(CreatedByRef), value);
 			}
 		}
 		
@@ -935,10 +2609,6 @@ namespace EarlyBoundTypes
 			get
 			{
 				return GetAttributeValue<DateTime?>("createdon");
-			}
-			set
-			{
-				SetAttributeValue("createdon", nameof(CreatedOn), value);
 			}
 		}
 		
@@ -963,8 +2633,21 @@ namespace EarlyBoundTypes
 		}
 		
 		[AttributeLogicalNameAttribute("linkedreportid")]
+		public EntityReference LinkedReport
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("linkedreportid");
+			}
+			set
+			{
+				SetAttributeValue("linkedreportid", nameof(LinkedReport), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("linkedreportid")]
 		[RelationshipSchemaNameAttribute("report_reportlink_sub")]
-		public Report LinkedReport
+		public Report LinkedReport_Report
 		{
 			get
 			{
@@ -972,7 +2655,7 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetRelatedEntity<Report>("report_reportlink_sub", nameof(LinkedReport), value);
+				SetRelatedEntity<Report>("report_reportlink_sub", nameof(LinkedReport_Report), value);
 			}
 		}
 		
@@ -986,19 +2669,6 @@ namespace EarlyBoundTypes
 			set
 			{
 				SetAttributeValue("linkedreportname", nameof(LinkedReportName), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("linkedreportid")]
-		public EntityReference LinkedReportRef
-		{
-			get
-			{
-				return GetAttributeValue<EntityReference>("linkedreportid");
-			}
-			set
-			{
-				SetAttributeValue("linkedreportid", nameof(LinkedReportRef), value);
 			}
 		}
 		
@@ -1016,21 +2686,7 @@ namespace EarlyBoundTypes
 		}
 		
 		[AttributeLogicalNameAttribute("reportid")]
-		[RelationshipSchemaNameAttribute("report_reportlink")]
-		public Report MainReport
-		{
-			get
-			{
-				return GetRelatedEntity<Report>("report_reportlink");
-			}
-			set
-			{
-				SetRelatedEntity<Report>("report_reportlink", nameof(MainReport), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("reportid")]
-		public EntityReference MainReportRef
+		public EntityReference MainReport
 		{
 			get
 			{
@@ -1038,20 +2694,30 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetAttributeValue("reportid", nameof(MainReportRef), value);
+				SetAttributeValue("reportid", nameof(MainReport), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("reportid")]
+		[RelationshipSchemaNameAttribute("report_reportlink")]
+		public Report MainReport_Report
+		{
+			get
+			{
+				return GetRelatedEntity<Report>("report_reportlink");
+			}
+			set
+			{
+				SetRelatedEntity<Report>("report_reportlink", nameof(MainReport_Report), value);
 			}
 		}
 		
 		[AttributeLogicalNameAttribute("modifiedby")]
-		public EntityReference ModifiedByRef
+		public EntityReference ModifiedBy
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("modifiedby");
-			}
-			set
-			{
-				SetAttributeValue("modifiedby", nameof(ModifiedByRef), value);
 			}
 		}
 		
@@ -1062,22 +2728,14 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<DateTime?>("modifiedon");
 			}
-			set
-			{
-				SetAttributeValue("modifiedon", nameof(ModifiedOn), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("ownerid")]
-		public EntityReference OwnerRef
+		public EntityReference Owner
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("ownerid");
-			}
-			set
-			{
-				SetAttributeValue("ownerid", nameof(OwnerRef), value);
 			}
 		}
 		
@@ -1088,10 +2746,6 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<Guid?>("owningbusinessunit");
 			}
-			set
-			{
-				SetAttributeValue("owningbusinessunit", nameof(OwningBusinessUnit), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("owninguser")]
@@ -1101,10 +2755,6 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<Guid?>("owninguser");
 			}
-			set
-			{
-				SetAttributeValue("owninguser", nameof(OwningUser), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("reportlinkidunique")]
@@ -1113,23 +2763,6 @@ namespace EarlyBoundTypes
 			get
 			{
 				return GetAttributeValue<Guid?>("reportlinkidunique");
-			}
-			set
-			{
-				SetAttributeValue("reportlinkidunique", nameof(ReportLinkIdUnique), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("versionnumber")]
-		public long? VersionNumber
-		{
-			get
-			{
-				return GetAttributeValue<long?>("versionnumber");
-			}
-			set
-			{
-				SetAttributeValue("versionnumber", nameof(VersionNumber), value);
 			}
 		}
 		
@@ -1159,42 +2792,40 @@ namespace EarlyBoundTypes
 		public struct LogicalNames
 		{
 			
-			public const string CreatedByRef = "createdby";
+			public const string CreatedBy = "createdby";
 			
 			public const string CreatedOn = "createdon";
 			
 			public const string Id = "reportlinkid";
 			
-			public const string LinkedReportName = "linkedreportname";
+			public const string LinkedReport = "linkedreportid";
 			
-			public const string LinkedReportRef = "linkedreportid";
+			public const string LinkedReportName = "linkedreportname";
 			
 			public const string LinkType = "linktypecode";
 			
-			public const string MainReportRef = "reportid";
+			public const string MainReport = "reportid";
 			
-			public const string ModifiedByRef = "modifiedby";
+			public const string ModifiedBy = "modifiedby";
 			
 			public const string ModifiedOn = "modifiedon";
 			
-			public const string OwnerRef = "ownerid";
+			public const string Owner = "ownerid";
 			
 			public const string OwningBusinessUnit = "owningbusinessunit";
 			
 			public const string OwningUser = "owninguser";
 			
 			public const string ReportLinkIdUnique = "reportlinkidunique";
-			
-			public const string VersionNumber = "versionnumber";
 		}
 		
 		[DataContract()]
 		public struct Relationships
 		{
 			
-			public const string LinkedReport = "report_reportlink_sub";
+			public const string LinkedReport_Report = "report_reportlink_sub";
 			
-			public const string MainReport = "report_reportlink";
+			public const string MainReport_Report = "report_reportlink";
 		}
 	}
 	
@@ -1229,22 +2860,14 @@ namespace EarlyBoundTypes
 			{
 				return (ComponentState?)GetAttributeValue<OptionSetValue>("componentstate")?.Value;
 			}
-			set
-			{
-				SetAttributeValue("componentstate", nameof(ComponentState), value.HasValue ? new OptionSetValue((int)value.Value) : null);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("createdby")]
-		public EntityReference CreatedByRef
+		public EntityReference CreatedBy
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("createdby");
-			}
-			set
-			{
-				SetAttributeValue("createdby", nameof(CreatedByRef), value);
 			}
 		}
 		
@@ -1254,23 +2877,6 @@ namespace EarlyBoundTypes
 			get
 			{
 				return GetAttributeValue<DateTime?>("createdon");
-			}
-			set
-			{
-				SetAttributeValue("createdon", nameof(CreatedOn), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("transactioncurrencyid")]
-		public EntityReference CurrencyRef
-		{
-			get
-			{
-				return GetAttributeValue<EntityReference>("transactioncurrencyid");
-			}
-			set
-			{
-				SetAttributeValue("transactioncurrencyid", nameof(CurrencyRef), value);
 			}
 		}
 		
@@ -1300,10 +2906,6 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<decimal?>("exchangerate");
 			}
-			set
-			{
-				SetAttributeValue("exchangerate", nameof(ExchangeRate), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("reportcategoryid")]
@@ -1327,22 +2929,14 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<bool?>("ismanaged");
 			}
-			set
-			{
-				SetAttributeValue("ismanaged", nameof(IsManaged), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("modifiedby")]
-		public EntityReference ModifiedByRef
+		public EntityReference ModifiedBy
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("modifiedby");
-			}
-			set
-			{
-				SetAttributeValue("modifiedby", nameof(ModifiedByRef), value);
 			}
 		}
 		
@@ -1353,22 +2947,14 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<DateTime?>("modifiedon");
 			}
-			set
-			{
-				SetAttributeValue("modifiedon", nameof(ModifiedOn), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("ownerid")]
-		public EntityReference OwnerRef
+		public EntityReference Owner
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("ownerid");
-			}
-			set
-			{
-				SetAttributeValue("ownerid", nameof(OwnerRef), value);
 			}
 		}
 		
@@ -1379,10 +2965,6 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<Guid?>("owningbusinessunit");
 			}
-			set
-			{
-				SetAttributeValue("owningbusinessunit", nameof(OwningBusinessUnit), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("owninguser")]
@@ -1392,54 +2974,10 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<Guid?>("owninguser");
 			}
-			set
-			{
-				SetAttributeValue("owninguser", nameof(OwningUser), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("overwritetime")]
-		public DateTime? RecordOverwriteTime
-		{
-			get
-			{
-				return GetAttributeValue<DateTime?>("overwritetime");
-			}
-			set
-			{
-				SetAttributeValue("overwritetime", nameof(RecordOverwriteTime), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("reportid")]
-		[RelationshipSchemaNameAttribute("report_reportcategories")]
-		public Report Report1
-		{
-			get
-			{
-				return GetRelatedEntity<Report>("report_reportcategories");
-			}
-			set
-			{
-				SetRelatedEntity<Report>("report_reportcategories", nameof(Report1), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("reportcategoryidunique")]
-		public Guid? ReportCategoryIdUnique
-		{
-			get
-			{
-				return GetAttributeValue<Guid?>("reportcategoryidunique");
-			}
-			set
-			{
-				SetAttributeValue("reportcategoryidunique", nameof(ReportCategoryIdUnique), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("reportid")]
-		public EntityReference ReportRef
+		public EntityReference Report
 		{
 			get
 			{
@@ -1447,72 +2985,48 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetAttributeValue("reportid", nameof(ReportRef), value);
+				SetAttributeValue("reportid", nameof(Report), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("reportid")]
+		[RelationshipSchemaNameAttribute("report_reportcategories")]
+		public Report Report_Report
+		{
+			get
+			{
+				return GetRelatedEntity<Report>("report_reportcategories");
+			}
+			set
+			{
+				SetRelatedEntity<Report>("report_reportcategories", nameof(Report_Report), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("reportcategoryidunique")]
+		public Guid? ReportCategory2
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("reportcategoryidunique");
 			}
 		}
 		
 		[AttributeLogicalNameAttribute("solutionid")]
-		public Guid? SolutionId
+		public Guid? Solution
 		{
 			get
 			{
 				return GetAttributeValue<Guid?>("solutionid");
 			}
-			set
-			{
-				SetAttributeValue("solutionid", nameof(SolutionId), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("supportingsolutionid")]
-		public Guid? SupportingSolutionId
+		public Guid? Solution2
 		{
 			get
 			{
 				return GetAttributeValue<Guid?>("supportingsolutionid");
-			}
-			set
-			{
-				SetAttributeValue("supportingsolutionid", nameof(SupportingSolutionId), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("timezoneruleversionnumber")]
-		public int? TimeZoneRuleVersionNumber
-		{
-			get
-			{
-				return GetAttributeValue<int?>("timezoneruleversionnumber");
-			}
-			set
-			{
-				SetAttributeValue("timezoneruleversionnumber", nameof(TimeZoneRuleVersionNumber), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("utcconversiontimezonecode")]
-		public int? UTCConversionTimeZoneCode
-		{
-			get
-			{
-				return GetAttributeValue<int?>("utcconversiontimezonecode");
-			}
-			set
-			{
-				SetAttributeValue("utcconversiontimezonecode", nameof(UTCConversionTimeZoneCode), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("versionnumber")]
-		public long? VersionNumber
-		{
-			get
-			{
-				return GetAttributeValue<long?>("versionnumber");
-			}
-			set
-			{
-				SetAttributeValue("versionnumber", nameof(VersionNumber), value);
 			}
 		}
 		
@@ -1550,11 +3064,9 @@ namespace EarlyBoundTypes
 			
 			public const string ComponentState = "componentstate";
 			
-			public const string CreatedByRef = "createdby";
+			public const string CreatedBy = "createdby";
 			
 			public const string CreatedOn = "createdon";
-			
-			public const string CurrencyRef = "transactioncurrencyid";
 			
 			public const string Customizable = "iscustomizable";
 			
@@ -1564,38 +3076,30 @@ namespace EarlyBoundTypes
 			
 			public const string IsManaged = "ismanaged";
 			
-			public const string ModifiedByRef = "modifiedby";
+			public const string ModifiedBy = "modifiedby";
 			
 			public const string ModifiedOn = "modifiedon";
 			
-			public const string OwnerRef = "ownerid";
+			public const string Owner = "ownerid";
 			
 			public const string OwningBusinessUnit = "owningbusinessunit";
 			
 			public const string OwningUser = "owninguser";
 			
-			public const string RecordOverwriteTime = "overwritetime";
+			public const string Report = "reportid";
 			
-			public const string ReportCategoryIdUnique = "reportcategoryidunique";
+			public const string ReportCategory2 = "reportcategoryidunique";
 			
-			public const string ReportRef = "reportid";
+			public const string Solution = "solutionid";
 			
-			public const string SolutionId = "solutionid";
-			
-			public const string SupportingSolutionId = "supportingsolutionid";
-			
-			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
-			
-			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
-			
-			public const string VersionNumber = "versionnumber";
+			public const string Solution2 = "supportingsolutionid";
 		}
 		
 		[DataContract()]
 		public struct Relationships
 		{
 			
-			public const string Report1 = "report_reportcategories";
+			public const string Report_Report = "report_reportcategories";
 		}
 	}
 	
@@ -1617,22 +3121,14 @@ namespace EarlyBoundTypes
 			{
 				return (ComponentState?)GetAttributeValue<OptionSetValue>("componentstate")?.Value;
 			}
-			set
-			{
-				SetAttributeValue("componentstate", nameof(ComponentState), value.HasValue ? new OptionSetValue((int)value.Value) : null);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("createdby")]
-		public EntityReference CreatedByRef
+		public EntityReference CreatedBy
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("createdby");
-			}
-			set
-			{
-				SetAttributeValue("createdby", nameof(CreatedByRef), value);
 			}
 		}
 		
@@ -1642,10 +3138,6 @@ namespace EarlyBoundTypes
 			get
 			{
 				return GetAttributeValue<DateTime?>("createdon");
-			}
-			set
-			{
-				SetAttributeValue("createdon", nameof(CreatedOn), value);
 			}
 		}
 		
@@ -1702,22 +3194,14 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<bool?>("ismanaged");
 			}
-			set
-			{
-				SetAttributeValue("ismanaged", nameof(IsManaged), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("modifiedby")]
-		public EntityReference ModifiedByRef
+		public EntityReference ModifiedBy
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("modifiedby");
-			}
-			set
-			{
-				SetAttributeValue("modifiedby", nameof(ModifiedByRef), value);
 			}
 		}
 		
@@ -1728,22 +3212,14 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<DateTime?>("modifiedon");
 			}
-			set
-			{
-				SetAttributeValue("modifiedon", nameof(ModifiedOn), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("ownerid")]
-		public EntityReference OwnerRef
+		public EntityReference Owner
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("ownerid");
-			}
-			set
-			{
-				SetAttributeValue("ownerid", nameof(OwnerRef), value);
 			}
 		}
 		
@@ -1754,10 +3230,6 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<Guid?>("owningbusinessunit");
 			}
-			set
-			{
-				SetAttributeValue("owningbusinessunit", nameof(OwningBusinessUnit), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("owninguser")]
@@ -1767,28 +3239,24 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<Guid?>("owninguser");
 			}
-			set
-			{
-				SetAttributeValue("owninguser", nameof(OwningUser), value);
-			}
 		}
 		
-		[AttributeLogicalNameAttribute("overwritetime")]
-		public DateTime? RecordOverwriteTime
+		[AttributeLogicalNameAttribute("reportid")]
+		public EntityReference Report
 		{
 			get
 			{
-				return GetAttributeValue<DateTime?>("overwritetime");
+				return GetAttributeValue<EntityReference>("reportid");
 			}
 			set
 			{
-				SetAttributeValue("overwritetime", nameof(RecordOverwriteTime), value);
+				SetAttributeValue("reportid", nameof(Report), value);
 			}
 		}
 		
 		[AttributeLogicalNameAttribute("reportid")]
 		[RelationshipSchemaNameAttribute("report_reportentities")]
-		public Report Report1
+		public Report Report_Report
 		{
 			get
 			{
@@ -1796,7 +3264,7 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetRelatedEntity<Report>("report_reportentities", nameof(Report1), value);
+				SetRelatedEntity<Report>("report_reportentities", nameof(Report_Report), value);
 			}
 		}
 		
@@ -1807,74 +3275,45 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<Guid?>("reportentityidunique");
 			}
-			set
-			{
-				SetAttributeValue("reportentityidunique", nameof(ReportEntityIdUnique), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("reportid")]
-		public EntityReference ReportRef
-		{
-			get
-			{
-				return GetAttributeValue<EntityReference>("reportid");
-			}
-			set
-			{
-				SetAttributeValue("reportid", nameof(ReportRef), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("objecttypecode")]
-		public string ReportRelatedEntity2
+		public Enums.ReportRelatedEntity? ReportRelatedEntity2
 		{
 			get
 			{
-				return GetAttributeValue<string>("objecttypecode");
+				return (Enums.ReportRelatedEntity?)GetAttributeValue<OptionSetValue>("objecttypecode")?.Value;
 			}
 			set
 			{
-				SetAttributeValue("objecttypecode", nameof(ReportRelatedEntity2), value);
+				SetAttributeValue("objecttypecode", nameof(ReportRelatedEntity2), value.HasValue ? new OptionSetValue((int)value.Value) : null);
 			}
 		}
 		
 		[AttributeLogicalNameAttribute("solutionid")]
-		public Guid? SolutionId
+		public Guid? Solution
 		{
 			get
 			{
 				return GetAttributeValue<Guid?>("solutionid");
 			}
-			set
-			{
-				SetAttributeValue("solutionid", nameof(SolutionId), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("supportingsolutionid")]
-		public Guid? SupportingSolutionId
+		public Guid? Solution2
 		{
 			get
 			{
 				return GetAttributeValue<Guid?>("supportingsolutionid");
 			}
-			set
-			{
-				SetAttributeValue("supportingsolutionid", nameof(SupportingSolutionId), value);
-			}
 		}
 		
-		[AttributeLogicalNameAttribute("versionnumber")]
-		public long? VersionNumber
+		[DataContract()]
+		public struct Enums
 		{
-			get
+			
+			public enum ReportRelatedEntity
 			{
-				return GetAttributeValue<long?>("versionnumber");
-			}
-			set
-			{
-				SetAttributeValue("versionnumber", nameof(VersionNumber), value);
 			}
 		}
 		
@@ -1884,7 +3323,7 @@ namespace EarlyBoundTypes
 			
 			public const string ComponentState = "componentstate";
 			
-			public const string CreatedByRef = "createdby";
+			public const string CreatedBy = "createdby";
 			
 			public const string CreatedOn = "createdon";
 			
@@ -1896,36 +3335,32 @@ namespace EarlyBoundTypes
 			
 			public const string IsManaged = "ismanaged";
 			
-			public const string ModifiedByRef = "modifiedby";
+			public const string ModifiedBy = "modifiedby";
 			
 			public const string ModifiedOn = "modifiedon";
 			
-			public const string OwnerRef = "ownerid";
+			public const string Owner = "ownerid";
 			
 			public const string OwningBusinessUnit = "owningbusinessunit";
 			
 			public const string OwningUser = "owninguser";
 			
-			public const string RecordOverwriteTime = "overwritetime";
+			public const string Report = "reportid";
 			
 			public const string ReportEntityIdUnique = "reportentityidunique";
 			
-			public const string ReportRef = "reportid";
-			
 			public const string ReportRelatedEntity2 = "objecttypecode";
 			
-			public const string SolutionId = "solutionid";
+			public const string Solution = "solutionid";
 			
-			public const string SupportingSolutionId = "supportingsolutionid";
-			
-			public const string VersionNumber = "versionnumber";
+			public const string Solution2 = "supportingsolutionid";
 		}
 		
 		[DataContract()]
 		public struct Relationships
 		{
 			
-			public const string Report1 = "report_reportentities";
+			public const string Report_Report = "report_reportentities";
 		}
 	}
 	
@@ -1947,22 +3382,14 @@ namespace EarlyBoundTypes
 			{
 				return (ComponentState?)GetAttributeValue<OptionSetValue>("componentstate")?.Value;
 			}
-			set
-			{
-				SetAttributeValue("componentstate", nameof(ComponentState), value.HasValue ? new OptionSetValue((int)value.Value) : null);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("createdby")]
-		public EntityReference CreatedByRef
+		public EntityReference CreatedBy
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("createdby");
-			}
-			set
-			{
-				SetAttributeValue("createdby", nameof(CreatedByRef), value);
 			}
 		}
 		
@@ -1972,10 +3399,6 @@ namespace EarlyBoundTypes
 			get
 			{
 				return GetAttributeValue<DateTime?>("createdon");
-			}
-			set
-			{
-				SetAttributeValue("createdon", nameof(CreatedOn), value);
 			}
 		}
 		
@@ -2019,22 +3442,14 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<bool?>("ismanaged");
 			}
-			set
-			{
-				SetAttributeValue("ismanaged", nameof(IsManaged), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("modifiedby")]
-		public EntityReference ModifiedByRef
+		public EntityReference ModifiedBy
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("modifiedby");
-			}
-			set
-			{
-				SetAttributeValue("modifiedby", nameof(ModifiedByRef), value);
 			}
 		}
 		
@@ -2045,22 +3460,14 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<DateTime?>("modifiedon");
 			}
-			set
-			{
-				SetAttributeValue("modifiedon", nameof(ModifiedOn), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("ownerid")]
-		public EntityReference OwnerRef
+		public EntityReference Owner
 		{
 			get
 			{
 				return GetAttributeValue<EntityReference>("ownerid");
-			}
-			set
-			{
-				SetAttributeValue("ownerid", nameof(OwnerRef), value);
 			}
 		}
 		
@@ -2071,10 +3478,6 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<Guid?>("owningbusinessunit");
 			}
-			set
-			{
-				SetAttributeValue("owningbusinessunit", nameof(OwningBusinessUnit), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("owninguser")]
@@ -2084,41 +3487,10 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<Guid?>("owninguser");
 			}
-			set
-			{
-				SetAttributeValue("owninguser", nameof(OwningUser), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("overwritetime")]
-		public DateTime? RecordOverwriteTime
-		{
-			get
-			{
-				return GetAttributeValue<DateTime?>("overwritetime");
-			}
-			set
-			{
-				SetAttributeValue("overwritetime", nameof(RecordOverwriteTime), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("reportid")]
-		[RelationshipSchemaNameAttribute("report_reportvisibility")]
-		public Report Report1
-		{
-			get
-			{
-				return GetRelatedEntity<Report>("report_reportvisibility");
-			}
-			set
-			{
-				SetRelatedEntity<Report>("report_reportvisibility", nameof(Report1), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("reportid")]
-		public EntityReference ReportRef
+		public EntityReference Report
 		{
 			get
 			{
@@ -2126,7 +3498,21 @@ namespace EarlyBoundTypes
 			}
 			set
 			{
-				SetAttributeValue("reportid", nameof(ReportRef), value);
+				SetAttributeValue("reportid", nameof(Report), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("reportid")]
+		[RelationshipSchemaNameAttribute("report_reportvisibility")]
+		public Report Report_Report
+		{
+			get
+			{
+				return GetRelatedEntity<Report>("report_reportvisibility");
+			}
+			set
+			{
+				SetRelatedEntity<Report>("report_reportvisibility", nameof(Report_Report), value);
 			}
 		}
 		
@@ -2137,48 +3523,23 @@ namespace EarlyBoundTypes
 			{
 				return GetAttributeValue<Guid?>("reportvisibilityidunique");
 			}
-			set
-			{
-				SetAttributeValue("reportvisibilityidunique", nameof(ReportVisibilityIdUnique), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("solutionid")]
-		public Guid? SolutionId
+		public Guid? Solution
 		{
 			get
 			{
 				return GetAttributeValue<Guid?>("solutionid");
 			}
-			set
-			{
-				SetAttributeValue("solutionid", nameof(SolutionId), value);
-			}
 		}
 		
 		[AttributeLogicalNameAttribute("supportingsolutionid")]
-		public Guid? SupportingSolutionId
+		public Guid? Solution2
 		{
 			get
 			{
 				return GetAttributeValue<Guid?>("supportingsolutionid");
-			}
-			set
-			{
-				SetAttributeValue("supportingsolutionid", nameof(SupportingSolutionId), value);
-			}
-		}
-		
-		[AttributeLogicalNameAttribute("versionnumber")]
-		public long? VersionNumber
-		{
-			get
-			{
-				return GetAttributeValue<long?>("versionnumber");
-			}
-			set
-			{
-				SetAttributeValue("versionnumber", nameof(VersionNumber), value);
 			}
 		}
 		
@@ -2223,7 +3584,7 @@ namespace EarlyBoundTypes
 			
 			public const string ComponentState = "componentstate";
 			
-			public const string CreatedByRef = "createdby";
+			public const string CreatedBy = "createdby";
 			
 			public const string CreatedOn = "createdon";
 			
@@ -2233,27 +3594,23 @@ namespace EarlyBoundTypes
 			
 			public const string IsManaged = "ismanaged";
 			
-			public const string ModifiedByRef = "modifiedby";
+			public const string ModifiedBy = "modifiedby";
 			
 			public const string ModifiedOn = "modifiedon";
 			
-			public const string OwnerRef = "ownerid";
+			public const string Owner = "ownerid";
 			
 			public const string OwningBusinessUnit = "owningbusinessunit";
 			
 			public const string OwningUser = "owninguser";
 			
-			public const string RecordOverwriteTime = "overwritetime";
-			
-			public const string ReportRef = "reportid";
+			public const string Report = "reportid";
 			
 			public const string ReportVisibilityIdUnique = "reportvisibilityidunique";
 			
-			public const string SolutionId = "solutionid";
+			public const string Solution = "solutionid";
 			
-			public const string SupportingSolutionId = "supportingsolutionid";
-			
-			public const string VersionNumber = "versionnumber";
+			public const string Solution2 = "supportingsolutionid";
 			
 			public const string Visibility = "visibilitycode";
 		}
@@ -2262,7 +3619,490 @@ namespace EarlyBoundTypes
 		public struct Relationships
 		{
 			
-			public const string Report1 = "report_reportvisibility";
+			public const string Report_Report = "report_reportvisibility";
+		}
+	}
+	
+	[DataContract()]
+	[EntityLogicalNameAttribute("roleprivileges")]
+	[ExcludeFromCodeCoverage()]
+	public partial class RolePrivileges : EarlyEntity
+	{
+		
+		public RolePrivileges() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		[AttributeLogicalNameAttribute("canbedeleted")]
+		public BooleanManagedProperty CanBeDeleted
+		{
+			get
+			{
+				return GetAttributeValue<BooleanManagedProperty>("canbedeleted");
+			}
+			set
+			{
+				SetAttributeValue("canbedeleted", nameof(CanBeDeleted), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("componentstate")]
+		public ComponentState? ComponentState
+		{
+			get
+			{
+				return (ComponentState?)GetAttributeValue<OptionSetValue>("componentstate")?.Value;
+			}
+		}
+		
+		public const string EntityLogicalCollectionName = null;
+		
+		public const string EntityLogicalName = "roleprivileges";
+		
+		public const string EntitySetName = "roleprivilegescollection";
+		
+		[AttributeLogicalNameAttribute("roleprivilegeid")]
+		public new virtual Guid Id
+		{
+			get
+			{
+				return base.Id != default ? base.Id : GetAttributeValue<Guid>("roleprivilegeid");
+			}
+			set
+			{
+				SetAttributeValue("roleprivilegeid", nameof(Id), value);
+				base.Id = value;
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("ismanaged")]
+		public bool? IsManaged
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("ismanaged");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("privilegedepthmask")]
+		public int? PrivilegeDepthMask
+		{
+			get
+			{
+				return GetAttributeValue<int?>("privilegedepthmask");
+			}
+			set
+			{
+				SetAttributeValue("privilegedepthmask", nameof(PrivilegeDepthMask), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("privilegeid")]
+		public Guid? PrivilegeId
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("privilegeid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("roleid")]
+		public Guid? RoleId
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("roleid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("roleprivilegeidunique")]
+		public Guid? RolePrivilegeIdUnique
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("roleprivilegeidunique");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("solutionid")]
+		public Guid? Solution
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("solutionid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("supportingsolutionid")]
+		public Guid? Solution2
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("supportingsolutionid");
+			}
+		}
+		
+		[DataContract()]
+		public struct LogicalNames
+		{
+			
+			public const string CanBeDeleted = "canbedeleted";
+			
+			public const string ComponentState = "componentstate";
+			
+			public const string Id = "roleprivilegeid";
+			
+			public const string IsManaged = "ismanaged";
+			
+			public const string PrivilegeDepthMask = "privilegedepthmask";
+			
+			public const string PrivilegeId = "privilegeid";
+			
+			public const string RoleId = "roleid";
+			
+			public const string RolePrivilegeIdUnique = "roleprivilegeidunique";
+			
+			public const string Solution = "solutionid";
+			
+			public const string Solution2 = "supportingsolutionid";
+		}
+		
+		[DataContract()]
+		public struct Relationships
+		{
+		}
+	}
+	
+	[DataContract()]
+	[EntityLogicalNameAttribute("role")]
+	[ExcludeFromCodeCoverage()]
+	public partial class SecurityRole : EarlyEntity
+	{
+		
+		public SecurityRole() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		[AttributeLogicalNameAttribute("businessunitid")]
+		public EntityReference BusinessUnit
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("businessunitid");
+			}
+			set
+			{
+				SetAttributeValue("businessunitid", nameof(BusinessUnit), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("canbedeleted")]
+		public BooleanManagedProperty CanBeDeleted
+		{
+			get
+			{
+				return GetAttributeValue<BooleanManagedProperty>("canbedeleted");
+			}
+			set
+			{
+				SetAttributeValue("canbedeleted", nameof(CanBeDeleted), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("componentstate")]
+		public ComponentState? ComponentState
+		{
+			get
+			{
+				return (ComponentState?)GetAttributeValue<OptionSetValue>("componentstate")?.Value;
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("createdby")]
+		public EntityReference CreatedBy
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("createdby");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("createdon")]
+		public DateTime? CreatedOn
+		{
+			get
+			{
+				return GetAttributeValue<DateTime?>("createdon");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("iscustomizable")]
+		public BooleanManagedProperty Customizable
+		{
+			get
+			{
+				return GetAttributeValue<BooleanManagedProperty>("iscustomizable");
+			}
+			set
+			{
+				SetAttributeValue("iscustomizable", nameof(Customizable), value);
+			}
+		}
+		
+		public const string EntityLogicalCollectionName = "roles";
+		
+		public const string EntityLogicalName = "role";
+		
+		public const string EntitySetName = "roles";
+		
+		[AttributeLogicalNameAttribute("roleid")]
+		public new virtual Guid Id
+		{
+			get
+			{
+				return base.Id != default ? base.Id : GetAttributeValue<Guid>("roleid");
+			}
+			set
+			{
+				SetAttributeValue("roleid", nameof(Id), value);
+				base.Id = value;
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("isinherited")]
+		public IsInherited? IsInherited
+		{
+			get
+			{
+				return (IsInherited?)GetAttributeValue<OptionSetValue>("isinherited")?.Value;
+			}
+			set
+			{
+				SetAttributeValue("isinherited", nameof(IsInherited), value.HasValue ? new OptionSetValue((int)value.Value) : null);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("modifiedby")]
+		public EntityReference ModifiedBy
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("modifiedby");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("modifiedon")]
+		public DateTime? ModifiedOn
+		{
+			get
+			{
+				return GetAttributeValue<DateTime?>("modifiedon");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("name")]
+		public string Name
+		{
+			get
+			{
+				return GetAttributeValue<string>("name");
+			}
+			set
+			{
+				SetAttributeValue("name", nameof(Name), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("organizationid")]
+		public Guid? Organization
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("organizationid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("parentroleid")]
+		public EntityReference ParentRole
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("parentroleid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("parentroleid")]
+		[RelationshipSchemaNameAttribute("role_parent_role", EntityRole.Referencing)]
+		public SecurityRole ParentRole_SecurityRole
+		{
+			get
+			{
+				return GetRelatedEntity<SecurityRole>("role_parent_role", EntityRole.Referencing);
+			}
+		}
+		
+		[RelationshipSchemaNameAttribute("role_parent_role", EntityRole.Referenced)]
+		public IEnumerable<SecurityRole> ParentRole_SecurityRoles
+		{
+			get
+			{
+				return GetRelatedEntities<SecurityRole>("role_parent_role", EntityRole.Referenced);
+			}
+			set
+			{
+				SetRelatedEntities<SecurityRole>("role_parent_role", nameof(ParentRole_SecurityRoles), value, EntityRole.Referenced);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("parentrootroleid")]
+		public EntityReference ParentRootRole
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("parentrootroleid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("parentrootroleid")]
+		[RelationshipSchemaNameAttribute("role_parent_root_role", EntityRole.Referencing)]
+		public SecurityRole ParentRootRole_SecurityRole
+		{
+			get
+			{
+				return GetRelatedEntity<SecurityRole>("role_parent_root_role", EntityRole.Referencing);
+			}
+		}
+		
+		[RelationshipSchemaNameAttribute("role_parent_root_role", EntityRole.Referenced)]
+		public IEnumerable<SecurityRole> ParentRootRole_SecurityRoles
+		{
+			get
+			{
+				return GetRelatedEntities<SecurityRole>("role_parent_root_role", EntityRole.Referenced);
+			}
+			set
+			{
+				SetRelatedEntities<SecurityRole>("role_parent_root_role", nameof(ParentRootRole_SecurityRoles), value, EntityRole.Referenced);
+			}
+		}
+		
+		[AttributeProvider(typeof(RolePrivileges))]
+		[RelationshipSchemaNameAttribute("roleprivileges_association")]
+		public IEnumerable<Privilege> Privileges
+		{
+			get
+			{
+				return GetRelatedEntities<Privilege>("roleprivileges_association");
+			}
+			set
+			{
+				SetRelatedEntities<Privilege>("roleprivileges_association", nameof(Privileges), value);
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("roletemplateid")]
+		public EntityReference RoleTemplate
+		{
+			get
+			{
+				return GetAttributeValue<EntityReference>("roletemplateid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("solutionid")]
+		public Guid? Solution
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("solutionid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("supportingsolutionid")]
+		public Guid? Solution2
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("supportingsolutionid");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("ismanaged")]
+		public bool? State
+		{
+			get
+			{
+				return GetAttributeValue<bool?>("ismanaged");
+			}
+		}
+		
+		[AttributeLogicalNameAttribute("roleidunique")]
+		public Guid? UniqueId
+		{
+			get
+			{
+				return GetAttributeValue<Guid?>("roleidunique");
+			}
+		}
+		
+		[DataContract()]
+		public struct LogicalNames
+		{
+			
+			public const string BusinessUnit = "businessunitid";
+			
+			public const string CanBeDeleted = "canbedeleted";
+			
+			public const string ComponentState = "componentstate";
+			
+			public const string CreatedBy = "createdby";
+			
+			public const string CreatedOn = "createdon";
+			
+			public const string Customizable = "iscustomizable";
+			
+			public const string Id = "roleid";
+			
+			public const string IsInherited = "isinherited";
+			
+			public const string ModifiedBy = "modifiedby";
+			
+			public const string ModifiedOn = "modifiedon";
+			
+			public const string Name = "name";
+			
+			public const string Organization = "organizationid";
+			
+			public const string ParentRole = "parentroleid";
+			
+			public const string ParentRootRole = "parentrootroleid";
+			
+			public const string RoleTemplate = "roletemplateid";
+			
+			public const string Solution = "solutionid";
+			
+			public const string Solution2 = "supportingsolutionid";
+			
+			public const string State = "ismanaged";
+			
+			public const string UniqueId = "roleidunique";
+		}
+		
+		[DataContract()]
+		public struct Relationships
+		{
+			
+			public const string ParentRole_SecurityRole = "role_parent_role";
+			
+			public const string ParentRole_SecurityRoles = "role_parent_role";
+			
+			public const string ParentRootRole_SecurityRole = "role_parent_root_role";
+			
+			public const string ParentRootRole_SecurityRoles = "role_parent_root_role";
+			
+			public const string Privileges = "roleprivileges_association";
 		}
 	}
 	
@@ -2298,9 +4138,19 @@ namespace EarlyBoundTypes
 		    return base.GetAttributeValue<EntityCollection>(attributeLogicalName)?.Entities?.Cast<T>();
 	    }
 		
+		public IEnumerable<T> GetAttributeEnums<T>(string attributeLogicalName) where T : struct, IConvertible
+	    {
+		    return base.GetAttributeValue<OptionSetValueCollection>(attributeLogicalName)?.Select(x => (T)(object)x.Value);
+	    }
+		
 		protected void SetAttributeValues<T>(string logicalName, string attributePropertyName, IEnumerable<T> value)  where T : Entity
         {
             SetAttributeValue(logicalName, attributePropertyName, new EntityCollection(new List<Entity>(value)));
+        }
+		
+		protected void SetAttributeEnums<T>(string logicalName, string attributePropertyName, IEnumerable<T> value)  where T : struct, IConvertible
+        {
+            SetAttributeValue(logicalName, attributePropertyName, new OptionSetValueCollection(new List<OptionSetValue>(value.Select(x => new OptionSetValue((int)(object)x)))));
         }
 		
 		protected void SetAttributeValue(string logicalName, string attributePropertyName, object value)

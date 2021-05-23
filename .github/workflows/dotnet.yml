@@ -79,6 +79,14 @@ jobs:
     - name: Add Github Source
       run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -Username ${{ github.repository_owner }} -Password ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Delete old packages
+      uses: smartsquaregmbh/delete-old-packages@v0.3.1
+      with:
+        keep: 2
+        names: |
+          EarlyXrm.QueryExpressionExtensions
+          EarlyXrm.QueryExpressionExtensions.Linked
+
     - name: Push to github
       run: nuget push **/*.nupkg -ApiKey ${{ secrets.GITHUB_TOKEN }} -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -SkipDuplicate
 
