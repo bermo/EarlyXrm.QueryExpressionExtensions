@@ -435,14 +435,34 @@ namespace EarlyXrm.QueryExpressionExtensions
                     linkEntity.LinkFromEntityName = parentLogical;
                     linkEntity.LinkFromAttributeName = primaryKey;
 
-                    var ambientValue = pi.GetCustomAttribute<AmbientValueAttribute>();
-                    if (ambientValue != null)
+                    var attributeProvider = pi.GetCustomAttribute<AttributeProviderAttribute>();
+                    if (attributeProvider != null)
                     {
-                        linkschemaName = ambientValue.Value.ToString();
+                        var type = Type.GetType(attributeProvider.TypeName);
+                        linkschemaName = type.GetCustomAttribute<EntityLogicalNameAttribute>().LogicalName;
                     }
-                    else if (linkschemaName.EndsWith("_association")) // I think all built-in many-to-many junction entities have an "_association" suffix ...
+                    else // try to work out many-to-many name
                     {
-                        linkschemaName = linkschemaName.Substring(0, linkschemaName.Length - "_association".Length);
+                        if (linkschemaName.EndsWith("_association")) // Alot of built-in many-to-many junction entities have an "_association" suffix ...
+                        {
+                            linkschemaName = linkschemaName.Substring(0, linkschemaName.Length - "_association".Length);
+                        }
+                        else
+                        {
+                            var weirdSetup = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase)
+                            {
+                                { "knowledgearticle_category", "KnowledgeArticleCategory" },
+                                { "ChannelAccessProfile_Privilege", "ChannelAccessProfileEntityAccessLevel" },
+                                { "contact_subscription_association", "SubscriptionManuallyTrackedObject" },
+                                { "serviceplan_appmodule", "ServicePlanAppModules" },
+                                { "sample_product_knowledgebaserecord", "msdyn_sample_product_knowledgebaserecord" }
+                            };
+
+                            if (weirdSetup.ContainsKey(linkschemaName))
+                            {
+                                linkschemaName = weirdSetup[linkschemaName];
+                            }
+                        }
                     }
 
                     linkEntity.LinkToEntityName = linkschemaName.ToLower(); // use RelationshipSchema by convention for custom entities ...
