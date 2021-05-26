@@ -51,13 +51,13 @@ jobs:
 
     - name: Unit Tests
       #run: dotnet test -c Release --no-build --filter FullyQualifiedName~UnitTests /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
-      run: dotnet test -c Release --no-build /p:CollectCoverage=true /p:Exclude="[*.*Tests]*" --filter FullyQualifiedName~UnitTests /p:CoverletOutput="$GITHUB_WORKSPACE/coverage/" /p:MergeWith="$GITHUB_WORKSPACE/coverage/coverage.json" /p:CoverletOutputFormat="lcov%2cjson" -m:1
+      run: dotnet test -c Release --no-build /p:CollectCoverage=true /p:Exclude="[*.*Tests]*" --filter FullyQualifiedName~UnitTests /p:MergeWith="$GITHUB_WORKSPACE/coverage/coverage.json" /p:CoverletOutputFormat="lcov%2cjson" -m:1
 
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.github_token }}
-        path-to-lcov: /home/runner/work/EarlyXrm.QueryExpressionExtensions/EarlyXrm.QueryExpressionExtensions/coverage/coverage.info
+        path-to-lcov: D:\a\EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.UnitTests\coverage.info
 
     - name: Generate coverage report
       uses: danielpalme/ReportGenerator-GitHub-Action@4.8.7
