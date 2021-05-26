@@ -1,5 +1,7 @@
 # QueryExpressionExtensions
 
+[![Coverage Status](https://coveralls.io/repos/github/bermo/EarlyXrm.QueryExpressionExtensions/badge.svg?branch=master)](https://coveralls.io/github/bermo/EarlyXrm.QueryExpressionExtensions?branch=master)
+
 A Dynamics library that provides generic implementations of many `QueryExpression` related classes for use with early-bound entities.
 The library also provides extension methods that re-hydrates an aliased flattened entity model.
 
