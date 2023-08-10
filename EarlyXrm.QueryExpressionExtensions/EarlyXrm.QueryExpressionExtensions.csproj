@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net462</TargetFramework>
+	<TargetFrameworks>net6.0;net48;net462;net472</TargetFrameworks>
     <Version>0.0.1</Version>
 	<PackageTags>crm dynamics c#</PackageTags>
 	<Authors>a berman</Authors>
@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.49" />
+    <PackageReference Include="Microsoft.PowerPlatform.Dataverse.Client" Version="1.1.12" />
   </ItemGroup>
 
 </Project>

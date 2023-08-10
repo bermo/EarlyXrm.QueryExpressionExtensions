@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net462</TargetFramework>
-	  <LangVersion>latest</LangVersion>
+	<TargetFramework>net48</TargetFramework>
+	<LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
     <UserSecretsId>04759ba5-ad4a-46b4-9293-6b1c00098c01</UserSecretsId>
   </PropertyGroup>
