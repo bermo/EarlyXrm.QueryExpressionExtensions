@@ -12,9 +12,7 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v2
       with:
@@ -52,11 +50,11 @@ jobs:
     - name: Unit Tests
       run: dotnet test -c Release --no-build --filter FullyQualifiedName~UnitTests /p:CollectCoverage=true /p:Exclude="[*.*Tests]*" /p:MergeWith="$GITHUB_WORKSPACE/coverage/coverage.json" /p:CoverletOutputFormat="lcov%2cjson" -m:1
 
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.github_token }}
-        path-to-lcov: EarlyXrm.QueryExpressionExtensions.UnitTests\coverage.info
+    #- name: Coveralls
+    #  uses: coverallsapp/github-action@master
+    #  with:
+    #    github-token: ${{ secrets.github_token }}
+    #    path-to-lcov: EarlyXrm.QueryExpressionExtensions.UnitTests\coverage.info
 
     #- run: Install-Module -Force -Name Xrm.Framework.CI.PowerShell.Cmdlets
     #  shell: powershell
@@ -70,6 +68,15 @@ jobs:
     #- name: Integration Tests
     #  run: dotnet test -c Release --no-build --filter FullyQualifiedName~IntegrationTests
       
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
     - name: Pack QueryExpressionExtensions
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.csproj /p:Configuration=Release /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}
       
@@ -84,14 +91,6 @@ jobs:
 
     - name: Add Github Source
       run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -Username ${{ github.repository_owner }} -Password ${{ secrets.GITHUB_TOKEN }}
-
-    #- name: Delete old packages
-    #  uses: smartsquaregmbh/delete-old-packages@v0.3.1
-    #  with:
-    #    keep: 2
-    #    names: |
-    #      EarlyXrm.QueryExpressionExtensions
-    #      EarlyXrm.QueryExpressionExtensions.Linked
 
     - name: Push to github
       run: nuget push **/EarlyXrm.QueryExpressionExtensions*.nupkg -ApiKey ${{ secrets.GITHUB_TOKEN }} -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -SkipDuplicate
