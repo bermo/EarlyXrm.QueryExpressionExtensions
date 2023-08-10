@@ -41,17 +41,17 @@ namespace EarlyXrm.QueryExpressionExtensions.IntegrationTests
                 }.RetrieveMultiple(ctx).Entities.First();
 
                 result.Should().BeEquivalentTo(knowledgeArticle, x => x
-                    .Using<DateTime>(y => y.Subject.Should().BeCloseTo(y.Expectation, 1000)).WhenTypeIs<DateTime>()
-                    .Excluding(y => y.SelectedMemberInfo.MemberType == typeof(EntityReference))
-                    .Excluding(y => y.SelectedMemberInfo.DeclaringType == typeof(Entity))
+                    .Using<DateTime>(y => y.Subject.Should().BeCloseTo(y.Expectation, TimeSpan.FromSeconds(1))).WhenTypeIs<DateTime>()
+                    .Excluding(y => y.DeclaringType == typeof(EntityReference))
+                    .Excluding(y => y.DeclaringType == typeof(Entity))
                     .Using(new IgnoreNullMembersInExpectation())
                     .Excluding(x => x.IsLatestVersion)
                     .Excluding(x => x.PrimaryArticle)
                     .Excluding(y => y.Categories));
 
                 result.Categories.Should().BeEquivalentTo(knowledgeArticle.Categories, x => x
-                    .Excluding(y => y.SelectedMemberInfo.MemberType == typeof(EntityReference))
-                    .Excluding(y => y.SelectedMemberInfo.DeclaringType == typeof(Entity))
+                    .Excluding(y => y.DeclaringType == typeof(EntityReference))
+                    .Excluding(y => y.DeclaringType == typeof(Entity))
                     .Using(new IgnoreNullMembersInExpectation()));
             }
             finally
