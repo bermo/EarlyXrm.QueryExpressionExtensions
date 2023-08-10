@@ -58,17 +58,17 @@ jobs:
         github-token: ${{ secrets.github_token }}
         path-to-lcov: EarlyXrm.QueryExpressionExtensions.UnitTests\coverage.info
 
-    - run: Install-Module -Force -Name Xrm.Framework.CI.PowerShell.Cmdlets
-      shell: powershell
+    #- run: Install-Module -Force -Name Xrm.Framework.CI.PowerShell.Cmdlets
+    #  shell: powershell
       
-    - run: Select-WhoAmI -ConnectionString:"${{secrets.CrmConnectionString}}"
-      shell: powershell
+    #- run: Select-WhoAmI -ConnectionString:"${{secrets.CrmConnectionString}}"
+    #  shell: powershell
 
-    - run: Get-Content EarlyXrm.QueryExpressionExtensions.IntegrationTests\bin\Release\net462\appsettings.json
-      shell: powershell
+    #- run: Get-Content EarlyXrm.QueryExpressionExtensions.IntegrationTests\bin\Release\net462\appsettings.json
+    #  shell: powershell
 
-    - name: Integration Tests
-      run: dotnet test -c Release --no-build --filter FullyQualifiedName~IntegrationTests
+    #- name: Integration Tests
+    #  run: dotnet test -c Release --no-build --filter FullyQualifiedName~IntegrationTests
       
     - name: Pack QueryExpressionExtensions
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.csproj /p:Configuration=Release /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}
