@@ -67,15 +67,6 @@ jobs:
 
     #- name: Integration Tests
     #  run: dotnet test -c Release --no-build --filter FullyQualifiedName~IntegrationTests
-      
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    if: github.ref == 'refs/heads/master'
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
 
     - name: Pack QueryExpressionExtensions
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions\EarlyXrm.QueryExpressionExtensions.csproj /p:Configuration=Release /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}
@@ -83,11 +74,28 @@ jobs:
     - name: Pack QueryExpressionExtensions.Linked
       run: msbuild -t:pack EarlyXrm.QueryExpressionExtensions.Linked\EarlyXrm.QueryExpressionExtensions.Linked.csproj /p:Configuration=Release /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}
       
-    - name: Publish build artifacts
-      uses: actions/upload-artifact@master
+    - uses: actions/upload-artifact@v3
       with:
         name: packages
         path: ./**/EarlyXrm.QueryExpressionExtensions*.nupkg
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    steps:
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: packages
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+    #- name: Publish build artifacts
+    #  uses: actions/upload-artifact@master
+    #  with:
+    #    name: packages
+    #    path: ./**/EarlyXrm.QueryExpressionExtensions*.nupkg
 
     - name: Add Github Source
       run: nuget sources add -name "github" -Source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -Username ${{ github.repository_owner }} -Password ${{ secrets.GITHUB_TOKEN }}
