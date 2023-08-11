@@ -1,6 +1,6 @@
 ﻿using EarlyBoundTypes;
 using FluentAssertions;
-using Microsoft.Xrm.Tooling.Connector;
+using Microsoft.PowerPlatform.Dataverse.Client;
 using Xunit;
 
 namespace EarlyXrm.QueryExpressionExtensions.IntegrationTests
@@ -10,7 +10,7 @@ namespace EarlyXrm.QueryExpressionExtensions.IntegrationTests
         [Fact]
         public void GetReportsAreaReports()
         {
-            using var ctx = new CrmServiceClient(connectionString);
+            using var ctx = new ServiceClient(connectionString);
 
             var reports = new QueryExpression<Report>
             {
@@ -33,7 +33,7 @@ namespace EarlyXrm.QueryExpressionExtensions.IntegrationTests
         [Fact]
         public void GetReportsWithSubReports()
         {
-            using var ctx = new CrmServiceClient(connectionString);
+            using var ctx = new ServiceClient(connectionString);
 
             var reports = new QueryExpression<Report>
             {

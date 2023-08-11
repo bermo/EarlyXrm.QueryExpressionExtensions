@@ -2,6 +2,7 @@
 
   <PropertyGroup>
 	<TargetFrameworks>net6.0;net48;net462;net472</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
     <Version>0.0.1</Version>
     <Authors>a berman</Authors>
 	<PackageTags>crm dynamics c#</PackageTags>

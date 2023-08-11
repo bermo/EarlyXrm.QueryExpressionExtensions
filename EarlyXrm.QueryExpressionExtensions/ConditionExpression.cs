@@ -4,93 +4,92 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 
-namespace EarlyXrm.QueryExpressionExtensions
+namespace EarlyXrm.QueryExpressionExtensions;
+
+public partial class ConditionExpression<T> where T : Entity
 {
-    public partial class ConditionExpression<T> where T : Entity
+    public static implicit operator ConditionExpression(ConditionExpression<T> self)
     {
-        public static implicit operator ConditionExpression(ConditionExpression<T> self)
+        var val = new ConditionExpression
         {
-            var val = new ConditionExpression
-            {
-                AttributeName = self.AttributeName,
-                Operator = self.Operator
-            };
+            AttributeName = self.AttributeName,
+            Operator = self.Operator
+        };
 
-            foreach(var value in self.Values)
-            {
-                var type = value.GetType();
-                if (type == typeof(EntityReference))
-                    val.Values.Add(((EntityReference)value).Id);
-                else if (type.IsEnum)
-                    val.Values.Add((int)value);
-                else
-                    val.Values.Add(value);
-            }
-
-            return val;
+        foreach(var value in self.Values)
+        {
+            var type = value.GetType();
+            if (type == typeof(EntityReference))
+                val.Values.Add(((EntityReference)value).Id);
+            else if (type.IsEnum)
+                val.Values.Add((int)value);
+            else
+                val.Values.Add(value);
         }
 
-        public string AttributeName { get; set; }
-        public ConditionOperator Operator { get; set; }
-        public Collection<object> Values { get; } = new Collection<object>();
+        return val;
+    }
 
-        public ConditionExpression() { }
+    public string AttributeName { get; set; }
+    public ConditionOperator Operator { get; set; }
+    public Collection<object> Values { get; } = new Collection<object>();
 
-        public ConditionExpression(Expression<Func<T, object>> column, object value)
+    public ConditionExpression() { }
+
+    public ConditionExpression(Expression<Func<T, object>> column, object value)
+    {
+        AttributeName = column.LogicalName();
+        Operator = ConditionOperator.Equal;
+        Values.Add(value);
+    }
+
+    public ConditionExpression(Expression<Func<T, object>> column, ConditionOperator conditionOperator, params object[] values)
+    {
+        AttributeName = column.LogicalName();
+        Operator = conditionOperator;
+        foreach (var val in values)
+            Values.Add(val);
+    }
+
+    public static ConditionExpression<T> Equal<U>(Expression<Func<T, U>> column, U value)
+    {
+        return new ConditionExpression<T>
         {
-            AttributeName = column.LogicalName();
-            Operator = ConditionOperator.Equal;
-            Values.Add(value);
-        }
+            AttributeName = column.LogicalName(),
+            Operator = ConditionOperator.Equal,
+            Values = { value }
+        };
+    }
 
-        public ConditionExpression(Expression<Func<T, object>> column, ConditionOperator conditionOperator, params object[] values)
+    public static ConditionExpression<T> Null<U>(Expression<Func<T, U>> column)
+    {
+        return new ConditionExpression<T>
         {
-            AttributeName = column.LogicalName();
-            Operator = conditionOperator;
-            foreach (var val in values)
-                Values.Add(val);
-        }
+            AttributeName = column.LogicalName(),
+            Operator = ConditionOperator.Null
+        };
+    }
 
-        public static ConditionExpression<T> Equal<U>(Expression<Func<T, U>> column, U value)
+    public static ConditionExpression<T> NotNull<U>(Expression<Func<T, U>> column)
+    {
+        return new ConditionExpression<T>
         {
-            return new ConditionExpression<T>
-            {
-                AttributeName = column.LogicalName(),
-                Operator = ConditionOperator.Equal,
-                Values = { value }
-            };
-        }
+            AttributeName = column.LogicalName(),
+            Operator = ConditionOperator.NotNull
+        };
+    }
 
-        public static ConditionExpression<T> Null<U>(Expression<Func<T, U>> column)
+    public static ConditionExpression<T> In<U>(Expression<Func<T, U>> column, params U[] values)
+    {
+        var condition = new ConditionExpression<T>
         {
-            return new ConditionExpression<T>
-            {
-                AttributeName = column.LogicalName(),
-                Operator = ConditionOperator.Null
-            };
-        }
+            AttributeName = column.LogicalName(),
+            Operator = ConditionOperator.In,
+        };
 
-        public static ConditionExpression<T> NotNull<U>(Expression<Func<T, U>> column)
-        {
-            return new ConditionExpression<T>
-            {
-                AttributeName = column.LogicalName(),
-                Operator = ConditionOperator.NotNull
-            };
-        }
+        foreach (var value in values)
+            condition.Values.Add(value);
 
-        public static ConditionExpression<T> In<U>(Expression<Func<T, U>> column, params U[] values)
-        {
-            var condition = new ConditionExpression<T>
-            {
-                AttributeName = column.LogicalName(),
-                Operator = ConditionOperator.In,
-            };
-
-            foreach (var value in values)
-                condition.Values.Add(value);
-
-            return condition;
-        }
+        return condition;
     }
 }

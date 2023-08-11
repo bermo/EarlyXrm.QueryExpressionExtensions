@@ -1,8 +1,8 @@
 ﻿using EarlyBoundTypes;
 using FluentAssertions;
+using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Tooling.Connector;
 using ModelBuilder;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace EarlyXrm.QueryExpressionExtensions.IntegrationTests
         [Fact]
         public void AddAndGetKnowledgeArticles()
         {
-            using var ctx = new CrmServiceClient(connectionString);
+            using var ctx = new ServiceClient(connectionString);
 
             var categories = new QueryExpression<KnowledgeArticle>().RetrieveMultiple(ctx).Entities;
             var languages = new QueryExpression<Language>().RetrieveMultiple(ctx).Entities.Where(x => x.Language2 == "English").OrderBy(x => x.Name);
