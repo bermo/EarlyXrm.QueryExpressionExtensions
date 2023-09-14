@@ -22,7 +22,7 @@ public class LinkEntity<T, U> : LinkEntity<T>, ILinkEntity<T>
         };
 
         le.EntityAlias = self.EntityAlias;
-        le.JoinOperator = self.JoinOperator ?? default(JoinOperator);
+        le.JoinOperator = self.JoinOperator ?? default;
         le.Columns = self.Columns ?? new ColumnSet(true);
         le.LinkCriteria = self.LinkCriteria;
 
@@ -81,6 +81,16 @@ public class LinkEntity<T> : ILinkEntity<T>
         var me = le.Body as MemberExpression;
         var pi = me.Member as PropertyInfo;
         var relationship = pi.GetCustomAttribute<RelationshipSchemaNameAttribute>();
+
+        if (relationship == null) // class may be overriden
+        {
+            var pType = me.Expression.Type;
+            var properties = pType.GetProperties().Where(x => x.Name == pi.Name);
+            var overriden = properties.FirstOrDefault(x => x.DeclaringType == pType);
+            if (overriden != null) pi = overriden;
+            relationship = properties.First(x => x.DeclaringType != pType).GetCustomAttribute<RelationshipSchemaNameAttribute>();
+        }
+
         var parentType = pi.DeclaringType;
         var parentLogical = parentType.GetCustomAttribute<EntityLogicalNameAttribute>().LogicalName;
         var primaryKey = parentType.GetProperty("Id")?.GetCustomAttribute<AttributeLogicalNameAttribute>()?.LogicalName;

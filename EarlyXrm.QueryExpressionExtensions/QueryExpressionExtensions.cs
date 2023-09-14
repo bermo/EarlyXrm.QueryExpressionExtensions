@@ -100,8 +100,18 @@ public static class QueryExpressionExtensions
         foreach (var linkEntity in linkEntities)
         {
             var me = linkEntity.ParentExpression;
-            var pi = ((MemberExpression)me.Body).Member as PropertyInfo;
+            var memberExpression = (MemberExpression)me.Body;
+            var pi = memberExpression.Member as PropertyInfo;
             var relationship = pi.GetCustomAttribute<RelationshipSchemaNameAttribute>();
+
+            if (relationship == null) // class may be overriden
+            {
+                var parentType = memberExpression.Expression.Type;
+                var properties = parentType.GetProperties().Where(x => x.Name == pi.Name);
+                var overriden = properties.FirstOrDefault(x => x.DeclaringType == parentType);
+                if (overriden != null) pi = overriden;
+                relationship = properties.First(x => x.DeclaringType != parentType).GetCustomAttribute<RelationshipSchemaNameAttribute>();
+            }
 
             var aliasSeed = 'A';
             var last = aliasMap.Keys.Count == 0 ? --aliasSeed : aliasMap.Keys.Last();
