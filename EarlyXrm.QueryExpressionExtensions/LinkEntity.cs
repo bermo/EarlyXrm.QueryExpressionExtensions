@@ -40,7 +40,7 @@ public class LinkEntity<T, U> : LinkEntity<T>, ILinkEntity<T>
 
     public new Collection<OrderExpression<U>> Orders { get; set; } = new Collection<OrderExpression<U>>();
 
-    public new ColumnSet<U> Columns { get; set; } = new ColumnSet<U>();
+    public new ColumnSet<U> Columns { get; set; } = new ColumnSet<U>(true);
 
     public new FilterExpression<U> LinkCriteria { get; set; } = new FilterExpression<U>();
 
@@ -65,7 +65,7 @@ public class LinkEntity<T, U> : LinkEntity<T>, ILinkEntity<T>
         JoinOperator = joinOperator;
     }
 
-    public LinkEntity(Expression<Func<T, IEnumerable<U>>> expression, JoinOperator? joinOperator = null)
+    public LinkEntity(Expression<Func<T, IEnumerable<U>?>> expression, JoinOperator? joinOperator = null)
     {
         lambdaExpression = expression;
         JoinOperator = joinOperator;
