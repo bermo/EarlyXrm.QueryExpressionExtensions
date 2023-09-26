@@ -30,17 +30,17 @@ public partial class ConditionExpression<T> where T : Entity
         return val;
     }
 
-    public string AttributeName { get; set; }
+    public string AttributeName { get; set; } = "";
     public ConditionOperator Operator { get; set; }
     public Collection<object> Values { get; } = new Collection<object>();
 
     public ConditionExpression() { }
 
-    public ConditionExpression(Expression<Func<T, object>> column, object value)
+    public ConditionExpression(Expression<Func<T, object?>> column, object? value)
     {
         AttributeName = column.LogicalName();
         Operator = ConditionOperator.Equal;
-        Values.Add(value);
+        Values.Add(value!);
     }
 
     public ConditionExpression(Expression<Func<T, object>> column, ConditionOperator conditionOperator, params object[] values)
@@ -51,13 +51,13 @@ public partial class ConditionExpression<T> where T : Entity
             Values.Add(val);
     }
 
-    public static ConditionExpression<T> Equal<U>(Expression<Func<T, U>> column, U value)
+    public static ConditionExpression<T> Equal<U>(Expression<Func<T, U?>> column, U? value)
     {
         return new ConditionExpression<T>
         {
             AttributeName = column.LogicalName(),
             Operator = ConditionOperator.Equal,
-            Values = { value }
+            Values = { value! }
         };
     }
 
@@ -88,7 +88,7 @@ public partial class ConditionExpression<T> where T : Entity
         };
 
         foreach (var value in values)
-            condition.Values.Add(value);
+            condition.Values.Add(value!);
 
         return condition;
     }

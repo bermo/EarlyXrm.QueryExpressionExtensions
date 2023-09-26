@@ -11,10 +11,14 @@ public class ColumnSet<T> where T : Entity
 {
     public static implicit operator ColumnSet(ColumnSet<T> self)
     {
-        if (self == null)
-            return null;
+        if (self == null || self.AllColumns) return new ColumnSet(true);
 
         return new ColumnSet(self.Columns.ToArray());
+    }
+
+    public ColumnSet(bool all)
+    {
+        AllColumns = all;
     }
 
     public ColumnSet(params Expression<Func<T, object>>[] columns)
@@ -22,5 +26,7 @@ public class ColumnSet<T> where T : Entity
         Columns = columns.Select(x => x.LogicalName());
     }
 
-    public IEnumerable<string> Columns { get; private set; }
+    public IEnumerable<string> Columns { get; private set; } = Array.Empty<string>();
+
+    public bool AllColumns { get; private set; } = false;
 }

@@ -40,9 +40,9 @@ namespace EarlyXrm.QueryExpressionExtensions.UnitTests
                 new Test { Id = Guid.NewGuid() }
             });
 
-            var result = service.Retrieve(id, new ColumnSet<Test>(x => x.Id, x => x.DayOfWeek));
+            var result = service.Retrieve(id, new ColumnSet<Test>(x => x.Id, x => x.DayOfWeek!));
 
-            Assert.Equal(new[] { "ee_testid", "ee_dayofweek" }, result.Attributes.Select(x => x.Key));
+            Assert.Equal(new[] { "ee_testid", "ee_dayofweek" }, result?.Attributes.Select(x => x.Key));
         }
 
         [Fact]
@@ -67,8 +67,8 @@ namespace EarlyXrm.QueryExpressionExtensions.UnitTests
 
             var result = new QueryExpression<Test>().Retrieve(service, id);
 
-            Assert.Equal(id, result.Id);
-            Assert.Equal(DayOfWeek.Sunday, result.DayOfWeek);
+            Assert.Equal(id, result?.Id);
+            Assert.Equal(DayOfWeek.Sunday, result?.DayOfWeek);
         }
 
         [Fact]
@@ -228,12 +228,12 @@ namespace EarlyXrm.QueryExpressionExtensions.UnitTests
 
             var result = qe.Retrieve(service, id);
 
-            Assert.Equal("Test1", result.Name);
-            Assert.Equal(DayOfWeek.Monday, result.DayOfWeek);
-            var parent = result.ParentTest;
-            Assert.Equal("Parent Test", parent.Name);
-            Assert.Equal(DayOfWeek.Friday, parent.DayOfWeek);
-            Assert.Equal(2, parent.TestChilds.Count());
+            Assert.Equal("Test1", result?.Name);
+            Assert.Equal(DayOfWeek.Monday, result?.DayOfWeek);
+            var parent = result?.ParentTest;
+            Assert.Equal("Parent Test", parent?.Name);
+            Assert.Equal(DayOfWeek.Friday, parent?.DayOfWeek);
+            Assert.Equal(2, parent?.TestChilds.Count());
         }
 
         [Fact]
@@ -271,11 +271,9 @@ namespace EarlyXrm.QueryExpressionExtensions.UnitTests
 
             var result = qe.Retrieve(service, id);
 
-            Assert.Equal("Test1", result.Name);
-            Assert.Equal(DayOfWeek.Monday, result.DayOfWeek);
-            Assert.Equal(2, result.TestChilds.Count());
+            Assert.Equal("Test1", result?.Name);
+            Assert.Equal(DayOfWeek.Monday, result?.DayOfWeek);
+            Assert.Equal(2, result?.TestChilds.Count());
         }
-
-
     }
 }

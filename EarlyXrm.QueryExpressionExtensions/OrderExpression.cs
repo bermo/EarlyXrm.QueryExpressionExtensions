@@ -12,7 +12,7 @@ public class OrderExpression<T> where T : Entity
         return new OrderExpression { AttributeName = self.AttributeName, OrderType = self.OrderType };
     }
 
-    public OrderExpression(Expression<Func<T, object>> column, OrderType orderType = OrderType.Ascending)
+    public OrderExpression(Expression<Func<T, object?>> column, OrderType orderType = OrderType.Ascending)
     {
         AttributeName = column.LogicalName();
         OrderType = orderType;

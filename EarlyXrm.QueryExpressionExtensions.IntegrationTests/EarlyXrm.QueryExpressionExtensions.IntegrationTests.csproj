@@ -3,6 +3,7 @@
   <PropertyGroup>
 	<TargetFramework>net48</TargetFramework>
 	<LangVersion>latest</LangVersion>
+	<Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <UserSecretsId>04759ba5-ad4a-46b4-9293-6b1c00098c01</UserSecretsId>
   </PropertyGroup>

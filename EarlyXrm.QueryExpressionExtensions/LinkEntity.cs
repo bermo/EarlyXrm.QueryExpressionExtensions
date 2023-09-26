@@ -32,7 +32,7 @@ public class LinkEntity<T, U> : LinkEntity<T>, ILinkEntity<T>
         foreach (var linkCondition in self?.LinkConditions ?? new Collection<ConditionExpression<U>>())
             le.LinkCriteria.Conditions.Add(linkCondition);
 
-        foreach (var sublinkentity in self.LinkEntities)
+        foreach (var sublinkentity in self!.LinkEntities)
             le.LinkEntities.Add(sublinkentity);
 
         return le;
@@ -40,7 +40,7 @@ public class LinkEntity<T, U> : LinkEntity<T>, ILinkEntity<T>
 
     public new Collection<OrderExpression<U>> Orders { get; set; } = new Collection<OrderExpression<U>>();
 
-    public new ColumnSet<U> Columns { get; set; }
+    public new ColumnSet<U> Columns { get; set; } = new ColumnSet<U>();
 
     public new FilterExpression<U> LinkCriteria { get; set; } = new FilterExpression<U>();
 
@@ -48,7 +48,7 @@ public class LinkEntity<T, U> : LinkEntity<T>, ILinkEntity<T>
 
     public new Collection<LinkEntity<U>> LinkEntities { get; set; } = new Collection<LinkEntity<U>>();
 
-    LambdaExpression ILinkEntity.ParentExpression => lambdaExpression;
+    LambdaExpression? ILinkEntity.ParentExpression => lambdaExpression;
 
     IEnumerable<ILinkEntity> ILinkEntity.LinkQueryExpressions => LinkEntities.Select(x => x as ILinkEntity);
 
@@ -59,7 +59,7 @@ public class LinkEntity<T, U> : LinkEntity<T>, ILinkEntity<T>
     IEnumerable<OrderExpression> ILinkEntity.Orders => Orders.Select(x => (OrderExpression)x);
     IEnumerable<LinkEntity> ILinkEntity.LinkEntities => LinkEntities.Select(x => (LinkEntity)x);
 
-    public LinkEntity(Expression<Func<T, U>> expression, JoinOperator? joinOperator = null)
+    public LinkEntity(Expression<Func<T, U?>> expression, JoinOperator? joinOperator = null)
     {
         lambdaExpression = expression;
         JoinOperator = joinOperator;
@@ -78,32 +78,32 @@ public class LinkEntity<T> : ILinkEntity<T>
     public static implicit operator LinkEntity(LinkEntity<T> self)
     {
         var le = self.lambdaExpression;
-        var me = le.Body as MemberExpression;
-        var pi = me.Member as PropertyInfo;
-        var relationship = pi.GetCustomAttribute<RelationshipSchemaNameAttribute>();
+        var me = le?.Body as MemberExpression;
+        var pi = me?.Member as PropertyInfo;
+        var relationship = pi?.GetCustomAttribute<RelationshipSchemaNameAttribute>();
 
         if (relationship == null) // class may be overriden
         {
-            var pType = me.Expression.Type;
-            var properties = pType.GetProperties().Where(x => x.Name == pi.Name);
-            var overriden = properties.FirstOrDefault(x => x.DeclaringType == pType);
+            var pType = me?.Expression?.Type;
+            var properties = pType?.GetProperties().Where(x => x.Name == pi?.Name);
+            var overriden = properties?.FirstOrDefault(x => x.DeclaringType == pType);
             if (overriden != null) pi = overriden;
-            relationship = properties.First(x => x.DeclaringType != pType).GetCustomAttribute<RelationshipSchemaNameAttribute>();
+            relationship = properties?.First(x => x.DeclaringType != pType).GetCustomAttribute<RelationshipSchemaNameAttribute>();
         }
 
-        var parentType = pi.DeclaringType;
-        var parentLogical = parentType.GetCustomAttribute<EntityLogicalNameAttribute>().LogicalName;
-        var primaryKey = parentType.GetProperty("Id")?.GetCustomAttribute<AttributeLogicalNameAttribute>()?.LogicalName;
-        var linkproperty = parentType.GetProperties().Select(x => new { x, att = x.GetCustomAttribute<RelationshipSchemaNameAttribute>() })
+        var parentType = pi?.DeclaringType;
+        var parentLogical = parentType?.GetCustomAttribute<EntityLogicalNameAttribute>()?.LogicalName;
+        var primaryKey = parentType?.GetProperty("Id")?.GetCustomAttribute<AttributeLogicalNameAttribute>()?.LogicalName;
+        var linkproperty = parentType?.GetProperties().Select(x => new { x, att = x.GetCustomAttribute<RelationshipSchemaNameAttribute>() })
                             .Where(x => x.att != null)
-                            .FirstOrDefault(x => x.att.SchemaName == relationship.SchemaName && (relationship.PrimaryEntityRole == null || x.att.PrimaryEntityRole == relationship.PrimaryEntityRole)).x;
-        var childType = linkproperty.PropertyType.IsGenericType ? linkproperty.PropertyType.GetGenericArguments()[0] : linkproperty.PropertyType;
-        var childLogical = childType.GetCustomAttribute<EntityLogicalNameAttribute>().LogicalName;
+                            .FirstOrDefault(x => x.att?.SchemaName == relationship?.SchemaName && (relationship?.PrimaryEntityRole == null || x.att?.PrimaryEntityRole == relationship.PrimaryEntityRole))?.x;
+        var childType = linkproperty!.PropertyType.IsGenericType ? linkproperty.PropertyType.GetGenericArguments()[0] : linkproperty.PropertyType;
+        var childLogical = childType.GetCustomAttribute<EntityLogicalNameAttribute>()?.LogicalName;
 
-        var linkschemaName = relationship.SchemaName;
+        var linkschemaName = relationship?.SchemaName;
         var parentProp = childType.GetProperties().Select(x => new { x, att = x.GetCustomAttribute<RelationshipSchemaNameAttribute>() })
-                            .FirstOrDefault(y => y.att?.SchemaName == linkschemaName && (relationship.PrimaryEntityRole == null || y.att?.PrimaryEntityRole != relationship.PrimaryEntityRole)).x;
-        var linkAttribute = parentProp.GetCustomAttribute<AttributeLogicalNameAttribute>()?.LogicalName;
+                            .FirstOrDefault(y => y.att?.SchemaName == linkschemaName && (relationship?.PrimaryEntityRole == null || y.att?.PrimaryEntityRole != relationship.PrimaryEntityRole))?.x;
+        var linkAttribute = parentProp?.GetCustomAttribute<AttributeLogicalNameAttribute>()?.LogicalName;
 
         LinkEntity topLinkEntity;
         var linkEntity = new LinkEntity
@@ -140,15 +140,15 @@ public class LinkEntity<T> : ILinkEntity<T>
                 linkEntity.LinkFromEntityName = parentLogical;
                 linkEntity.LinkFromAttributeName = primaryKey;
 
-                var attributeProvider = pi.GetCustomAttribute<AttributeProviderAttribute>();
+                var attributeProvider = pi?.GetCustomAttribute<AttributeProviderAttribute>();
                 if (attributeProvider != null)
                 {
-                    var type = Type.GetType(attributeProvider.TypeName);
-                    linkschemaName = type.GetCustomAttribute<EntityLogicalNameAttribute>().LogicalName;
+                    var type = Type.GetType(attributeProvider.TypeName!);
+                    linkschemaName = type?.GetCustomAttribute<EntityLogicalNameAttribute>()?.LogicalName;
                 }
                 else // try to work out many-to-many name
                 {
-                    if (linkschemaName.EndsWith("_association")) // Alot of built-in many-to-many junction entities have an "_association" suffix ...
+                    if (linkschemaName!.EndsWith("_association")) // Alot of built-in many-to-many junction entities have an "_association" suffix ...
                     {
                         linkschemaName = linkschemaName.Substring(0, linkschemaName.Length - "_association".Length);
                     }
@@ -170,7 +170,7 @@ public class LinkEntity<T> : ILinkEntity<T>
                     }
                 }
 
-                linkEntity.LinkToEntityName = linkschemaName.ToLower(); // use RelationshipSchema by convention for custom entities ...
+                linkEntity.LinkToEntityName = linkschemaName?.ToLower(); // use RelationshipSchema by convention for custom entities ...
 
                 linkEntity.LinkToAttributeName = primaryKey;
 
@@ -202,7 +202,7 @@ public class LinkEntity<T> : ILinkEntity<T>
             foreach (var order in iLinkEntity?.Orders ?? new Collection<OrderExpression>())
                 topLinkEntity.Orders.Add(order);
 
-            foreach (var subLinkEntity in iLinkEntity.LinkEntities)
+            foreach (var subLinkEntity in iLinkEntity!.LinkEntities)
                 topLinkEntity.LinkEntities.Add(subLinkEntity);
         }
 
@@ -225,11 +225,11 @@ public class LinkEntity<T> : ILinkEntity<T>
 
     public Collection<OrderExpression> Orders { get; set; } = new Collection<OrderExpression>();
 
-    public string EntityAlias { get; set; }
+    public string EntityAlias { get; set; } = "";
 
-    public ColumnSet Columns { get; set; }
+    public ColumnSet Columns { get; set; } = new ();
 
-    internal LambdaExpression lambdaExpression;
+    internal LambdaExpression? lambdaExpression;
 
     public Collection<LinkEntity> LinkEntities { get; set; } = new Collection<LinkEntity>();
 
@@ -237,7 +237,7 @@ public class LinkEntity<T> : ILinkEntity<T>
 
     public virtual IEnumerable<ConditionExpression> LinkConditions { get; set; } = new Collection<ConditionExpression>();
 
-    LambdaExpression ILinkEntity.ParentExpression { get => lambdaExpression; }
+    LambdaExpression? ILinkEntity.ParentExpression => lambdaExpression;
 
     public JoinOperator? JoinOperator { get; set; }
 

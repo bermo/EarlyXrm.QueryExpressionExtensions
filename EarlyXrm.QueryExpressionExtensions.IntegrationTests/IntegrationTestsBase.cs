@@ -22,7 +22,7 @@ namespace EarlyXrm.QueryExpressionExtensions.IntegrationTests
                 .AddUserSecrets<ReportsIntegrationTests>()
                 .Build();
 
-            connectionString = config.GetConnectionString("Crm");
+            connectionString = config.GetConnectionString("Crm")!;
 
             NumericBuilder = Model.UsingDefaultConfiguration()
                 .UpdateValueGenerator<NumericValueGenerator>(x => x.AllowNegative = false);

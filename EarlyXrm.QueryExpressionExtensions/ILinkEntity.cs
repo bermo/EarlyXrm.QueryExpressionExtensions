@@ -16,7 +16,7 @@ public interface ILinkEntity
     IEnumerable<OrderExpression> Orders { get; }
     IEnumerable<ConditionExpression> LinkConditions { get; }
     IEnumerable<LinkEntity> LinkEntities { get; }
-    LambdaExpression ParentExpression { get; }
+    LambdaExpression? ParentExpression { get; }
     //string ManyToManyName { get; set; }
 
     JoinOperator? JoinOperator { get; set; }

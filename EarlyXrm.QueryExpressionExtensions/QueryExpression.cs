@@ -12,7 +12,7 @@ public class QueryExpression<T> where T : Entity
     {
         var val = new QueryExpression
         {
-            EntityName = typeof(T).GetCustomAttribute<EntityLogicalNameAttribute>().LogicalName,
+            EntityName = typeof(T).GetCustomAttribute<EntityLogicalNameAttribute>()?.LogicalName,
             ColumnSet = self.ColumnSet ?? new ColumnSet(true),
             Distinct = self.Distinct,
             PageInfo = self.PageInfo,
@@ -32,18 +32,18 @@ public class QueryExpression<T> where T : Entity
         return val;
     }
 
-    public ColumnSet<T> ColumnSet { get; set; }
+    public ColumnSet<T> ColumnSet { get; set; } = new (true);
 
-    public Collection<ConditionExpression<T>> Conditions { get; set; } = new Collection<ConditionExpression<T>>();
+    public Collection<ConditionExpression<T>> Conditions { get; set; } = new ();
 
-    public FilterExpression<T> Criteria { get; set; } = new FilterExpression<T>();
+    public FilterExpression<T> Criteria { get; set; } = new ();
 
     public JoinOperator DefaultJoinOperator { get; set; }
-    public Collection<LinkEntity<T>> LinkEntities { get; set; } = new Collection<LinkEntity<T>>();
+    public Collection<LinkEntity<T>> LinkEntities { get; set; } = new ();
 
-    public PagingInfo PageInfo { get; set; } = new PagingInfo();
+    public PagingInfo PageInfo { get; set; } = new ();
 
-    public Collection<OrderExpression<T>> Orders { get; set; } = new Collection<OrderExpression<T>>();
+    public Collection<OrderExpression<T>> Orders { get; set; } = new ();
 
     public bool Distinct { get; set; }
     public int? TopCount { get; set; }

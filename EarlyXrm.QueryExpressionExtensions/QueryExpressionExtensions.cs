@@ -32,7 +32,7 @@ public static class QueryExpressionExtensions
         return new EntityCollection<T>(result, aliasMap);
     }
 
-    public static T Retrieve<T>(this QueryExpression<T> queryExpression, IOrganizationService service, Guid id = default) where T : Entity
+    public static T? Retrieve<T>(this QueryExpression<T> queryExpression, IOrganizationService service, Guid id = default) where T : Entity
     {
         if (id != default) queryExpression.Criteria.Conditions.Add(new ConditionExpression<T>(x => x.Id, id));
 
@@ -41,7 +41,7 @@ public static class QueryExpressionExtensions
         return result.Entities.FirstOrDefault();
     }
 
-    public static async Task<T> RetrieveAsync<T>(this QueryExpression<T> queryExpression, IOrganizationServiceAsync service, Guid id = default) where T : Entity
+    public static async Task<T?> RetrieveAsync<T>(this QueryExpression<T> queryExpression, IOrganizationServiceAsync service, Guid id = default) where T : Entity
     {
         if (id != default) queryExpression.Criteria.Conditions.Add(new ConditionExpression<T>(x => x.Id, id));
 
@@ -64,15 +64,15 @@ public static class QueryExpressionExtensions
         return queryExpression.RetrieveMultipleAsync(service);
     }
 
-    public static T Retrieve<T>(this IOrganizationService organizationService, Guid id, ColumnSet<T> columnSet = null) where T : Entity
+    public static T? Retrieve<T>(this IOrganizationService organizationService, Guid id, ColumnSet<T>? columnSet = null) where T : Entity
     {
-        var qe = new QueryExpression<T> { ColumnSet = columnSet };
+        var qe = new QueryExpression<T> { ColumnSet = columnSet ?? new () };
         return Retrieve(qe, organizationService, id);
     }
 
-    public static Task<T> RetrieveAsync<T>(this IOrganizationServiceAsync organizationService, Guid id, ColumnSet<T> columnSet = null) where T : Entity
+    public static Task<T?> RetrieveAsync<T>(this IOrganizationServiceAsync organizationService, Guid id, ColumnSet<T>? columnSet = null) where T : Entity
     {
-        var qe = new QueryExpression<T> { ColumnSet = columnSet };
+        var qe = new QueryExpression<T> { ColumnSet = columnSet ?? new () };
         return RetrieveAsync(qe, organizationService, id);
     }
 
@@ -84,41 +84,40 @@ public static class QueryExpressionExtensions
 
         var result = context.Execute(new RetrieveMultipleRequest { Query = queryExpression }) as RetrieveMultipleResponse;
 
-        return new EntityCollection<T>(result.EntityCollection, aliasMap);
+        return new EntityCollection<T>(result?.EntityCollection ?? new EntityCollection(), aliasMap);
     }
 
     private static Dictionary<char, string> RecursiveSetup(
         this IEnumerable<ILinkEntity> linkEntities,
         JoinOperator defaultJoinOperator,
-        string parentAlias = null,
-        Dictionary<char, string> aliasMap = null
+        string? parentAlias = null,
+        Dictionary<char, string>? aliasMap = null
     )
     {
-        if (aliasMap == null)
-            aliasMap = new Dictionary<char, string>();
+        if (aliasMap == null) aliasMap = new Dictionary<char, string>();
 
         foreach (var linkEntity in linkEntities)
         {
             var me = linkEntity.ParentExpression;
-            var memberExpression = (MemberExpression)me.Body;
+            var memberExpression = (MemberExpression)me!.Body;
             var pi = memberExpression.Member as PropertyInfo;
-            var relationship = pi.GetCustomAttribute<RelationshipSchemaNameAttribute>();
+            var relationship = pi?.GetCustomAttribute<RelationshipSchemaNameAttribute>();
 
             if (relationship == null) // class may be overriden
             {
-                var parentType = memberExpression.Expression.Type;
-                var properties = parentType.GetProperties().Where(x => x.Name == pi.Name);
-                var overriden = properties.FirstOrDefault(x => x.DeclaringType == parentType);
+                var parentType = memberExpression.Expression?.Type;
+                var properties = parentType?.GetProperties().Where(x => x.Name == pi?.Name);
+                var overriden = properties?.FirstOrDefault(x => x.DeclaringType == parentType);
                 if (overriden != null) pi = overriden;
-                relationship = properties.First(x => x.DeclaringType != parentType).GetCustomAttribute<RelationshipSchemaNameAttribute>();
+                relationship = properties?.First(x => x.DeclaringType != parentType).GetCustomAttribute<RelationshipSchemaNameAttribute>();
             }
 
             var aliasSeed = 'A';
             var last = aliasMap.Keys.Count == 0 ? --aliasSeed : aliasMap.Keys.Last();
 
             var prefix = parentAlias != null ? $"{parentAlias}." : "";
-            var suffix = relationship.PrimaryEntityRole == null ? "" : $":{relationship.PrimaryEntityRole.Value}";
-            var alias = $"{prefix}{relationship.SchemaName}{suffix}";
+            var suffix = relationship?.PrimaryEntityRole == null ? "" : $":{relationship.PrimaryEntityRole.Value}";
+            var alias = $"{prefix}{relationship?.SchemaName}{suffix}";
             aliasMap.Add(++last, alias);
 
             linkEntity.EntityAlias = last.ToString();
@@ -140,12 +139,12 @@ public static class QueryExpressionExtensions
 
         var me = expression as MemberExpression;
 
-        var pi = me.Member as PropertyInfo;
-        var customAttribute = pi.GetCustomAttribute<AttributeLogicalNameAttribute>();
+        var pi = me?.Member as PropertyInfo;
+        var customAttribute = pi?.GetCustomAttribute<AttributeLogicalNameAttribute>();
 
         if (customAttribute == null) // usually the Id member from base Entity
-            customAttribute = lambda.Type.GetGenericArguments().First().GetMember(pi.Name).First().GetCustomAttribute<AttributeLogicalNameAttribute>();
+            customAttribute = lambda.Type.GetGenericArguments().First().GetMember(pi!.Name).First().GetCustomAttribute<AttributeLogicalNameAttribute>();
 
-        return customAttribute?.LogicalName;
+        return customAttribute?.LogicalName ?? "";
     }
 }

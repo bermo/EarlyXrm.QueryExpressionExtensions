@@ -14,17 +14,17 @@ public class EntityCollection<T> : IEnumerable<T>
 {
     public Collection<T> Entities { get; internal set; } = new Collection<T>();
     public bool MoreRecords { get; set; }
-    public string PagingCookie { get; set; }
-    public string MinActiveRowVersion { get; set; }
+    public string PagingCookie { get; set; } = "";
+    public string MinActiveRowVersion { get; set; } = "";
     public int TotalRecordCount { get; set; }
     public bool TotalRecordCountLimitExceeded { get; set; }
-    public string EntityName { get; private set; }
+    public string EntityName { get; private set; } = "";
 
     public static implicit operator EntityCollection(EntityCollection<T> self)
     {
         var val = new EntityCollection
         {
-            EntityName = typeof(T).GetCustomAttribute<EntityLogicalNameAttribute>().LogicalName,
+            EntityName = typeof(T).GetCustomAttribute<EntityLogicalNameAttribute>()?.LogicalName,
             MoreRecords = self.MoreRecords,
             PagingCookie = self.PagingCookie,
             MinActiveRowVersion = self.MinActiveRowVersion,
@@ -39,7 +39,7 @@ public class EntityCollection<T> : IEnumerable<T>
 
     public EntityCollection() { }
 
-    public EntityCollection(EntityCollection entityCollection, Dictionary<char, string> aliasMap = null)
+    public EntityCollection(EntityCollection entityCollection, Dictionary<char, string>? aliasMap = null)
     {
         EntityName = entityCollection.EntityName;
         MinActiveRowVersion = entityCollection.MinActiveRowVersion;
@@ -67,7 +67,7 @@ public class EntityCollection<T> : IEnumerable<T>
                     RelateEntity(child, ref firstChild, aliasMap);
                 }
 
-                result.Add(firstChild as T);
+                result.Add((T)firstChild);
             }
 
             foreach (var entity in result)
@@ -124,14 +124,14 @@ public class EntityCollection<T> : IEnumerable<T>
     {
         var logicalName = group.First().EntityLogicalName;
         var earlyType = typeof(T).Assembly.GetTypes().FirstOrDefault(x => x.GetCustomAttribute<EntityLogicalNameAttribute>()?.LogicalName == logicalName);
-        var entity = Activator.CreateInstance(earlyType) as Entity;
+        var entity = Activator.CreateInstance(earlyType!) as Entity;
 
         var atts = group.Where(x => x.EntityLogicalName == logicalName).Select(x => new KeyValuePair<string, object>(x.AttributeLogicalName, x.Value));
-        entity.Attributes.AddRange(atts);
+        entity!.Attributes.AddRange(atts);
 
         if (entity.Id == Guid.Empty)
         {
-            var idLogicalName = earlyType.GetProperty("Id").GetCustomAttribute<AttributeLogicalNameAttribute>().LogicalName;
+            var idLogicalName = earlyType?.GetProperty("Id")?.GetCustomAttribute<AttributeLogicalNameAttribute>()?.LogicalName;
             if (!entity.Attributes.ContainsKey(idLogicalName))
                 throw new ApplicationException("Missing Id!");
             entity.Id = (Guid)entity.Attributes[idLogicalName];
