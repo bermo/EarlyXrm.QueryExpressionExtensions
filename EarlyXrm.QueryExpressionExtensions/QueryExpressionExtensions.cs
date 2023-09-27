@@ -66,13 +66,13 @@ public static class QueryExpressionExtensions
 
     public static T? Retrieve<T>(this IOrganizationService organizationService, Guid id, ColumnSet<T>? columnSet = null) where T : Entity
     {
-        var qe = new QueryExpression<T> { ColumnSet = columnSet ?? new () };
+        var qe = new QueryExpression<T> { ColumnSet = columnSet ?? new (true) };
         return Retrieve(qe, organizationService, id);
     }
 
     public static Task<T?> RetrieveAsync<T>(this IOrganizationServiceAsync organizationService, Guid id, ColumnSet<T>? columnSet = null) where T : Entity
     {
-        var qe = new QueryExpression<T> { ColumnSet = columnSet ?? new () };
+        var qe = new QueryExpression<T> { ColumnSet = columnSet ?? new (true) };
         return RetrieveAsync(qe, organizationService, id);
     }
 

@@ -227,7 +227,7 @@ public class LinkEntity<T> : ILinkEntity<T>
 
     public string EntityAlias { get; set; } = "";
 
-    public ColumnSet Columns { get; set; } = new ();
+    public ColumnSet Columns { get; set; } = new (true);
 
     internal LambdaExpression? lambdaExpression;
 
