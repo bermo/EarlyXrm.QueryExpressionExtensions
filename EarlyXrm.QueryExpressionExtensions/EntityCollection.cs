@@ -123,7 +123,7 @@ public class EntityCollection<T> : IEnumerable<T>
     protected virtual Entity CreateEntityFromAlias(IGrouping<string, AliasedValue> group)
     {
         var logicalName = group.First().EntityLogicalName;
-        var earlyType = typeof(T).Assembly.GetTypes().FirstOrDefault(x => x.GetCustomAttribute<EntityLogicalNameAttribute>()?.LogicalName == logicalName);
+        var earlyType = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).FirstOrDefault(x => x.GetCustomAttribute<EntityLogicalNameAttribute>(true)?.LogicalName == logicalName);
         var entity = Activator.CreateInstance(earlyType!) as Entity;
 
         var atts = group.Where(x => x.EntityLogicalName == logicalName).Select(x => new KeyValuePair<string, object>(x.AttributeLogicalName, x.Value));
