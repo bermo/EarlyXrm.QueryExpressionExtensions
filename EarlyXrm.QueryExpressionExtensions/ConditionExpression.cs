@@ -36,6 +36,21 @@ public partial class ConditionExpression<T> where T : Entity
 
     public ConditionExpression() { }
 
+    public ConditionExpression(string attributeName, ConditionOperator conditionOperator, object value)
+    {
+        AttributeName = attributeName;
+        Operator = conditionOperator;
+        Values.Add(value);
+    }
+
+    public ConditionExpression(string attributeName, ConditionOperator conditionOperator, params object[] values)
+    {
+        AttributeName = attributeName;
+        Operator = conditionOperator;
+        foreach (var val in values)
+            Values.Add(val);
+    }
+
     public ConditionExpression(Expression<Func<T, object?>> column, object? value)
     {
         AttributeName = column.LogicalName();

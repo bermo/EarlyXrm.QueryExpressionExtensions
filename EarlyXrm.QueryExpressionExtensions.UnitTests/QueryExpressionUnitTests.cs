@@ -22,7 +22,7 @@ namespace EarlyXrm.QueryExpressionExtensions.UnitTests
                     PageNumber = 3,
                     ReturnTotalRecordCount = true
                 },
-                ColumnSet = new ColumnSet<Test>(x => x.Name)
+                ColumnSet = new (x => x.Name)
             };
 
             var result = (QueryExpression)qe;
@@ -39,12 +39,11 @@ namespace EarlyXrm.QueryExpressionExtensions.UnitTests
         public void BasicCollectionProperties_MappedAsExpected()
         {
             var qe = new QueryExpression<Test> { 
-                Conditions = new Collection<ConditionExpression<Test>> {
+                Conditions = {
                     ConditionExpression<Test>.In(x => x.DayOfWeek, DayOfWeek.Friday)
                 },
-                Orders = new Collection<OrderExpression<Test>>
-                {
-                    new OrderExpression<Test>(x => x.Name, OrderType.Ascending)
+                Orders = {
+                    new (x => x.Name, OrderType.Ascending)
                 }
             };
             
@@ -65,8 +64,8 @@ namespace EarlyXrm.QueryExpressionExtensions.UnitTests
             var qe = new QueryExpression<Test>
             {
                 LinkEntities = {
-                    new LinkEntity<Test>(x => x.TestChilds),
-                    new LinkEntity<Test>(x => x.TestManys)
+                    new (x => x.TestChilds),
+                    new (x => x.TestManys)
                 }
             };
 
