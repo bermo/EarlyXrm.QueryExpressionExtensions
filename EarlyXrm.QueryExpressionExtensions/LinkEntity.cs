@@ -211,13 +211,13 @@ public class LinkEntity<T> : ILinkEntity<T>
 
     internal LinkEntity() { }
 
-    public LinkEntity(Expression<Func<T, Entity>> expression, JoinOperator? joinOperator = null)
+    public LinkEntity(Expression<Func<T, Entity?>> expression, JoinOperator? joinOperator = null)
     {
         lambdaExpression = expression;
         JoinOperator = joinOperator;
     }
 
-    public LinkEntity(Expression<Func<T, IEnumerable<Entity>>> expression, JoinOperator? joinOperator = null)
+    public LinkEntity(Expression<Func<T, IEnumerable<Entity>?>> expression, JoinOperator? joinOperator = null)
     {
         lambdaExpression = expression;
         JoinOperator = joinOperator;

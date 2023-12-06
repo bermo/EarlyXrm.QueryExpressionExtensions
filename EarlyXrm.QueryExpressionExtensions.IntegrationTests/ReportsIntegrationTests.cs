@@ -6,7 +6,7 @@ using Xunit;
 
 namespace EarlyXrm.QueryExpressionExtensions.IntegrationTests;
 
-public class ReportsIntegrationTests //: IntegrationTestsBase
+public class ReportsIntegrationTests
 {
     private readonly string connectionString;
 
@@ -28,14 +28,14 @@ public class ReportsIntegrationTests //: IntegrationTestsBase
                 Count = 2, PageNumber = 1,
                 ReturnTotalRecordCount = true
             },
-            ColumnSet = new ColumnSet<Report>(),
+            ColumnSet = new (),
             LinkEntities =
             {
                 new LinkEntity<Report, ReportVisibility>(x => x.Report_ReportVisibilities) {
-                    Columns = new ColumnSet<ReportVisibility>(),
+                    Columns = new (),
                     LinkConditions =
                     {
-                        new ConditionExpression<ReportVisibility>(x => x.Visibility, ReportVisibility.Enums.Visibility.ReportsArea)
+                        new (x => x.Visibility, ReportVisibility.Enums.Visibility.ReportsArea)
                     }
                 },
             }
@@ -51,13 +51,13 @@ public class ReportsIntegrationTests //: IntegrationTestsBase
 
         var reports = new QueryExpression<Report>
         {
-            ColumnSet = new ColumnSet<Report>(x => x.Name),
+            ColumnSet = new (x => x.Name),
             LinkEntities =
             {
                 new LinkEntity<Report, ReportLink>(x => x.MainReport_ReportLinks){
                     LinkEntities =
                     {
-                        new LinkEntity<ReportLink>(x => x.LinkedReport_Report)
+                        new (x => x.LinkedReport_Report)
                     }
                 },
             }

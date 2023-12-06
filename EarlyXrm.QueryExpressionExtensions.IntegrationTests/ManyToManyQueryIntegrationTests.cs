@@ -36,8 +36,8 @@ namespace EarlyXrm.QueryExpressionExtensions.IntegrationTests
 
                 var result = new QueryExpression<KnowledgeArticle>
                 {
-                    Conditions = { new ConditionExpression<KnowledgeArticle>(x => x.Id, id) },
-                    LinkEntities = { new LinkEntity<KnowledgeArticle, Category>(x => x.Categories) }
+                    Conditions = { new (x => x.Id, id) },
+                    LinkEntities = { new (x => x.Categories) }
                 }.RetrieveMultiple(ctx).Entities.First();
 
                 result.Should().BeEquivalentTo(knowledgeArticle, x => x

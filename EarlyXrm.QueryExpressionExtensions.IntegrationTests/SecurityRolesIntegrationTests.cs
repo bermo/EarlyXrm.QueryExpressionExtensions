@@ -15,7 +15,7 @@ namespace EarlyXrm.QueryExpressionExtensions.IntegrationTests
             var securityRoles = new QueryExpression<SecurityRole>
             {
                 LinkEntities = {
-                    new LinkEntity<SecurityRole>(x => x.Privileges)
+                    new (x => x.Privileges)
                 }
             }.RetrieveMultiple(ctx).Entities;
 
